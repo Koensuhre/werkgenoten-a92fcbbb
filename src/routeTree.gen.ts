@@ -9,38 +9,328 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WordProfessionalRouteImport } from './routes/word-professional'
+import { Route as VakmensenRouteImport } from './routes/vakmensen'
+import { Route as PrijzenRouteImport } from './routes/prijzen'
+import { Route as PlaatsOpdrachtRouteImport } from './routes/plaats-opdracht'
+import { Route as OpdrachtenRouteImport } from './routes/opdrachten'
+import { Route as InloggenRouteImport } from './routes/inloggen'
+import { Route as HoeWerktHetRouteImport } from './routes/hoe-werkt-het'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VakmensenIndexRouteImport } from './routes/vakmensen.index'
+import { Route as OpdrachtenIndexRouteImport } from './routes/opdrachten.index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as VakmensenSlugRouteImport } from './routes/vakmensen.$slug'
+import { Route as OpdrachtenSlugRouteImport } from './routes/opdrachten.$slug'
+import { Route as DashboardReviewsRouteImport } from './routes/dashboard.reviews'
+import { Route as DashboardProjectenRouteImport } from './routes/dashboard.projecten'
+import { Route as DashboardLeadsRouteImport } from './routes/dashboard.leads'
+import { Route as DashboardInstellingenRouteImport } from './routes/dashboard.instellingen'
+import { Route as DashboardBerichtenRouteImport } from './routes/dashboard.berichten'
+import { Route as DashboardAbonnementRouteImport } from './routes/dashboard.abonnement'
 
+const WordProfessionalRoute = WordProfessionalRouteImport.update({
+  id: '/word-professional',
+  path: '/word-professional',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VakmensenRoute = VakmensenRouteImport.update({
+  id: '/vakmensen',
+  path: '/vakmensen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrijzenRoute = PrijzenRouteImport.update({
+  id: '/prijzen',
+  path: '/prijzen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaatsOpdrachtRoute = PlaatsOpdrachtRouteImport.update({
+  id: '/plaats-opdracht',
+  path: '/plaats-opdracht',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpdrachtenRoute = OpdrachtenRouteImport.update({
+  id: '/opdrachten',
+  path: '/opdrachten',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InloggenRoute = InloggenRouteImport.update({
+  id: '/inloggen',
+  path: '/inloggen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HoeWerktHetRoute = HoeWerktHetRouteImport.update({
+  id: '/hoe-werkt-het',
+  path: '/hoe-werkt-het',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VakmensenIndexRoute = VakmensenIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => VakmensenRoute,
+} as any)
+const OpdrachtenIndexRoute = OpdrachtenIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OpdrachtenRoute,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const VakmensenSlugRoute = VakmensenSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => VakmensenRoute,
+} as any)
+const OpdrachtenSlugRoute = OpdrachtenSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => OpdrachtenRoute,
+} as any)
+const DashboardReviewsRoute = DashboardReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardProjectenRoute = DashboardProjectenRouteImport.update({
+  id: '/projecten',
+  path: '/projecten',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardLeadsRoute = DashboardLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardInstellingenRoute = DashboardInstellingenRouteImport.update({
+  id: '/instellingen',
+  path: '/instellingen',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardBerichtenRoute = DashboardBerichtenRouteImport.update({
+  id: '/berichten',
+  path: '/berichten',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAbonnementRoute = DashboardAbonnementRouteImport.update({
+  id: '/abonnement',
+  path: '/abonnement',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/hoe-werkt-het': typeof HoeWerktHetRoute
+  '/inloggen': typeof InloggenRoute
+  '/opdrachten': typeof OpdrachtenRouteWithChildren
+  '/plaats-opdracht': typeof PlaatsOpdrachtRoute
+  '/prijzen': typeof PrijzenRoute
+  '/vakmensen': typeof VakmensenRouteWithChildren
+  '/word-professional': typeof WordProfessionalRoute
+  '/dashboard/abonnement': typeof DashboardAbonnementRoute
+  '/dashboard/berichten': typeof DashboardBerichtenRoute
+  '/dashboard/instellingen': typeof DashboardInstellingenRoute
+  '/dashboard/leads': typeof DashboardLeadsRoute
+  '/dashboard/projecten': typeof DashboardProjectenRoute
+  '/dashboard/reviews': typeof DashboardReviewsRoute
+  '/opdrachten/$slug': typeof OpdrachtenSlugRoute
+  '/vakmensen/$slug': typeof VakmensenSlugRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/opdrachten/': typeof OpdrachtenIndexRoute
+  '/vakmensen/': typeof VakmensenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/hoe-werkt-het': typeof HoeWerktHetRoute
+  '/inloggen': typeof InloggenRoute
+  '/plaats-opdracht': typeof PlaatsOpdrachtRoute
+  '/prijzen': typeof PrijzenRoute
+  '/word-professional': typeof WordProfessionalRoute
+  '/dashboard/abonnement': typeof DashboardAbonnementRoute
+  '/dashboard/berichten': typeof DashboardBerichtenRoute
+  '/dashboard/instellingen': typeof DashboardInstellingenRoute
+  '/dashboard/leads': typeof DashboardLeadsRoute
+  '/dashboard/projecten': typeof DashboardProjectenRoute
+  '/dashboard/reviews': typeof DashboardReviewsRoute
+  '/opdrachten/$slug': typeof OpdrachtenSlugRoute
+  '/vakmensen/$slug': typeof VakmensenSlugRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/opdrachten': typeof OpdrachtenIndexRoute
+  '/vakmensen': typeof VakmensenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/hoe-werkt-het': typeof HoeWerktHetRoute
+  '/inloggen': typeof InloggenRoute
+  '/opdrachten': typeof OpdrachtenRouteWithChildren
+  '/plaats-opdracht': typeof PlaatsOpdrachtRoute
+  '/prijzen': typeof PrijzenRoute
+  '/vakmensen': typeof VakmensenRouteWithChildren
+  '/word-professional': typeof WordProfessionalRoute
+  '/dashboard/abonnement': typeof DashboardAbonnementRoute
+  '/dashboard/berichten': typeof DashboardBerichtenRoute
+  '/dashboard/instellingen': typeof DashboardInstellingenRoute
+  '/dashboard/leads': typeof DashboardLeadsRoute
+  '/dashboard/projecten': typeof DashboardProjectenRoute
+  '/dashboard/reviews': typeof DashboardReviewsRoute
+  '/opdrachten/$slug': typeof OpdrachtenSlugRoute
+  '/vakmensen/$slug': typeof VakmensenSlugRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/opdrachten/': typeof OpdrachtenIndexRoute
+  '/vakmensen/': typeof VakmensenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/hoe-werkt-het'
+    | '/inloggen'
+    | '/opdrachten'
+    | '/plaats-opdracht'
+    | '/prijzen'
+    | '/vakmensen'
+    | '/word-professional'
+    | '/dashboard/abonnement'
+    | '/dashboard/berichten'
+    | '/dashboard/instellingen'
+    | '/dashboard/leads'
+    | '/dashboard/projecten'
+    | '/dashboard/reviews'
+    | '/opdrachten/$slug'
+    | '/vakmensen/$slug'
+    | '/dashboard/'
+    | '/opdrachten/'
+    | '/vakmensen/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/hoe-werkt-het'
+    | '/inloggen'
+    | '/plaats-opdracht'
+    | '/prijzen'
+    | '/word-professional'
+    | '/dashboard/abonnement'
+    | '/dashboard/berichten'
+    | '/dashboard/instellingen'
+    | '/dashboard/leads'
+    | '/dashboard/projecten'
+    | '/dashboard/reviews'
+    | '/opdrachten/$slug'
+    | '/vakmensen/$slug'
+    | '/dashboard'
+    | '/opdrachten'
+    | '/vakmensen'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/hoe-werkt-het'
+    | '/inloggen'
+    | '/opdrachten'
+    | '/plaats-opdracht'
+    | '/prijzen'
+    | '/vakmensen'
+    | '/word-professional'
+    | '/dashboard/abonnement'
+    | '/dashboard/berichten'
+    | '/dashboard/instellingen'
+    | '/dashboard/leads'
+    | '/dashboard/projecten'
+    | '/dashboard/reviews'
+    | '/opdrachten/$slug'
+    | '/vakmensen/$slug'
+    | '/dashboard/'
+    | '/opdrachten/'
+    | '/vakmensen/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  HoeWerktHetRoute: typeof HoeWerktHetRoute
+  InloggenRoute: typeof InloggenRoute
+  OpdrachtenRoute: typeof OpdrachtenRouteWithChildren
+  PlaatsOpdrachtRoute: typeof PlaatsOpdrachtRoute
+  PrijzenRoute: typeof PrijzenRoute
+  VakmensenRoute: typeof VakmensenRouteWithChildren
+  WordProfessionalRoute: typeof WordProfessionalRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/word-professional': {
+      id: '/word-professional'
+      path: '/word-professional'
+      fullPath: '/word-professional'
+      preLoaderRoute: typeof WordProfessionalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vakmensen': {
+      id: '/vakmensen'
+      path: '/vakmensen'
+      fullPath: '/vakmensen'
+      preLoaderRoute: typeof VakmensenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prijzen': {
+      id: '/prijzen'
+      path: '/prijzen'
+      fullPath: '/prijzen'
+      preLoaderRoute: typeof PrijzenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plaats-opdracht': {
+      id: '/plaats-opdracht'
+      path: '/plaats-opdracht'
+      fullPath: '/plaats-opdracht'
+      preLoaderRoute: typeof PlaatsOpdrachtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/opdrachten': {
+      id: '/opdrachten'
+      path: '/opdrachten'
+      fullPath: '/opdrachten'
+      preLoaderRoute: typeof OpdrachtenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inloggen': {
+      id: '/inloggen'
+      path: '/inloggen'
+      fullPath: '/inloggen'
+      preLoaderRoute: typeof InloggenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hoe-werkt-het': {
+      id: '/hoe-werkt-het'
+      path: '/hoe-werkt-het'
+      fullPath: '/hoe-werkt-het'
+      preLoaderRoute: typeof HoeWerktHetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +338,149 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/vakmensen/': {
+      id: '/vakmensen/'
+      path: '/'
+      fullPath: '/vakmensen/'
+      preLoaderRoute: typeof VakmensenIndexRouteImport
+      parentRoute: typeof VakmensenRoute
+    }
+    '/opdrachten/': {
+      id: '/opdrachten/'
+      path: '/'
+      fullPath: '/opdrachten/'
+      preLoaderRoute: typeof OpdrachtenIndexRouteImport
+      parentRoute: typeof OpdrachtenRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/vakmensen/$slug': {
+      id: '/vakmensen/$slug'
+      path: '/$slug'
+      fullPath: '/vakmensen/$slug'
+      preLoaderRoute: typeof VakmensenSlugRouteImport
+      parentRoute: typeof VakmensenRoute
+    }
+    '/opdrachten/$slug': {
+      id: '/opdrachten/$slug'
+      path: '/$slug'
+      fullPath: '/opdrachten/$slug'
+      preLoaderRoute: typeof OpdrachtenSlugRouteImport
+      parentRoute: typeof OpdrachtenRoute
+    }
+    '/dashboard/reviews': {
+      id: '/dashboard/reviews'
+      path: '/reviews'
+      fullPath: '/dashboard/reviews'
+      preLoaderRoute: typeof DashboardReviewsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/projecten': {
+      id: '/dashboard/projecten'
+      path: '/projecten'
+      fullPath: '/dashboard/projecten'
+      preLoaderRoute: typeof DashboardProjectenRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/leads': {
+      id: '/dashboard/leads'
+      path: '/leads'
+      fullPath: '/dashboard/leads'
+      preLoaderRoute: typeof DashboardLeadsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/instellingen': {
+      id: '/dashboard/instellingen'
+      path: '/instellingen'
+      fullPath: '/dashboard/instellingen'
+      preLoaderRoute: typeof DashboardInstellingenRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/berichten': {
+      id: '/dashboard/berichten'
+      path: '/berichten'
+      fullPath: '/dashboard/berichten'
+      preLoaderRoute: typeof DashboardBerichtenRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/abonnement': {
+      id: '/dashboard/abonnement'
+      path: '/abonnement'
+      fullPath: '/dashboard/abonnement'
+      preLoaderRoute: typeof DashboardAbonnementRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardAbonnementRoute: typeof DashboardAbonnementRoute
+  DashboardBerichtenRoute: typeof DashboardBerichtenRoute
+  DashboardInstellingenRoute: typeof DashboardInstellingenRoute
+  DashboardLeadsRoute: typeof DashboardLeadsRoute
+  DashboardProjectenRoute: typeof DashboardProjectenRoute
+  DashboardReviewsRoute: typeof DashboardReviewsRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAbonnementRoute: DashboardAbonnementRoute,
+  DashboardBerichtenRoute: DashboardBerichtenRoute,
+  DashboardInstellingenRoute: DashboardInstellingenRoute,
+  DashboardLeadsRoute: DashboardLeadsRoute,
+  DashboardProjectenRoute: DashboardProjectenRoute,
+  DashboardReviewsRoute: DashboardReviewsRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+interface OpdrachtenRouteChildren {
+  OpdrachtenSlugRoute: typeof OpdrachtenSlugRoute
+  OpdrachtenIndexRoute: typeof OpdrachtenIndexRoute
+}
+
+const OpdrachtenRouteChildren: OpdrachtenRouteChildren = {
+  OpdrachtenSlugRoute: OpdrachtenSlugRoute,
+  OpdrachtenIndexRoute: OpdrachtenIndexRoute,
+}
+
+const OpdrachtenRouteWithChildren = OpdrachtenRoute._addFileChildren(
+  OpdrachtenRouteChildren,
+)
+
+interface VakmensenRouteChildren {
+  VakmensenSlugRoute: typeof VakmensenSlugRoute
+  VakmensenIndexRoute: typeof VakmensenIndexRoute
+}
+
+const VakmensenRouteChildren: VakmensenRouteChildren = {
+  VakmensenSlugRoute: VakmensenSlugRoute,
+  VakmensenIndexRoute: VakmensenIndexRoute,
+}
+
+const VakmensenRouteWithChildren = VakmensenRoute._addFileChildren(
+  VakmensenRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  HoeWerktHetRoute: HoeWerktHetRoute,
+  InloggenRoute: InloggenRoute,
+  OpdrachtenRoute: OpdrachtenRouteWithChildren,
+  PlaatsOpdrachtRoute: PlaatsOpdrachtRoute,
+  PrijzenRoute: PrijzenRoute,
+  VakmensenRoute: VakmensenRouteWithChildren,
+  WordProfessionalRoute: WordProfessionalRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
