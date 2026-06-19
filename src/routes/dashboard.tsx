@@ -13,12 +13,12 @@ export const Route = createFileRoute("/dashboard")({
 
 const nav = [
   { to: "/dashboard", label: "Overzicht", icon: LayoutDashboard, exact: true },
-  { to: "/dashboard/projecten", label: "Projecten", icon: Briefcase },
-  { to: "/dashboard/berichten", label: "Berichten", icon: MessageCircle },
-  { to: "/dashboard/reviews", label: "Reviews", icon: Star },
-  { to: "/dashboard/leads", label: "Leads", icon: TrendingUp },
-  { to: "/dashboard/abonnement", label: "Abonnement", icon: CreditCard },
-  { to: "/dashboard/instellingen", label: "Instellingen", icon: Settings },
+  { to: "/dashboard/projecten", label: "Projecten", icon: Briefcase, exact: false },
+  { to: "/dashboard/berichten", label: "Berichten", icon: MessageCircle, exact: false },
+  { to: "/dashboard/reviews", label: "Reviews", icon: Star, exact: false },
+  { to: "/dashboard/leads", label: "Leads", icon: TrendingUp, exact: false },
+  { to: "/dashboard/abonnement", label: "Abonnement", icon: CreditCard, exact: false },
+  { to: "/dashboard/instellingen", label: "Instellingen", icon: Settings, exact: false },
 ] as const;
 
 function DashboardLayout() {
