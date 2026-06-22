@@ -17,6 +17,7 @@ import { Route as OpdrachtenRouteImport } from './routes/opdrachten'
 import { Route as InloggenRouteImport } from './routes/inloggen'
 import { Route as HoeWerktHetRouteImport } from './routes/hoe-werkt-het'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VakmensenIndexRouteImport } from './routes/vakmensen.index'
 import { Route as OpdrachtenIndexRouteImport } from './routes/opdrachten.index'
@@ -29,6 +30,7 @@ import { Route as DashboardLeadsRouteImport } from './routes/dashboard.leads'
 import { Route as DashboardInstellingenRouteImport } from './routes/dashboard.instellingen'
 import { Route as DashboardBerichtenRouteImport } from './routes/dashboard.berichten'
 import { Route as DashboardAbonnementRouteImport } from './routes/dashboard.abonnement'
+import { Route as CmsSlugRouteImport } from './routes/cms.$slug'
 
 const WordProfessionalRoute = WordProfessionalRouteImport.update({
   id: '/word-professional',
@@ -68,6 +70,11 @@ const HoeWerktHetRoute = HoeWerktHetRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -130,9 +137,15 @@ const DashboardAbonnementRoute = DashboardAbonnementRouteImport.update({
   path: '/abonnement',
   getParentRoute: () => DashboardRoute,
 } as any)
+const CmsSlugRoute = CmsSlugRouteImport.update({
+  id: '/cms/$slug',
+  path: '/cms/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
@@ -141,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/prijzen': typeof PrijzenRoute
   '/vakmensen': typeof VakmensenRouteWithChildren
   '/word-professional': typeof WordProfessionalRoute
+  '/cms/$slug': typeof CmsSlugRoute
   '/dashboard/abonnement': typeof DashboardAbonnementRoute
   '/dashboard/berichten': typeof DashboardBerichtenRoute
   '/dashboard/instellingen': typeof DashboardInstellingenRoute
@@ -155,11 +169,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
   '/plaats-opdracht': typeof PlaatsOpdrachtRoute
   '/prijzen': typeof PrijzenRoute
   '/word-professional': typeof WordProfessionalRoute
+  '/cms/$slug': typeof CmsSlugRoute
   '/dashboard/abonnement': typeof DashboardAbonnementRoute
   '/dashboard/berichten': typeof DashboardBerichtenRoute
   '/dashboard/instellingen': typeof DashboardInstellingenRoute
@@ -175,6 +191,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
@@ -183,6 +200,7 @@ export interface FileRoutesById {
   '/prijzen': typeof PrijzenRoute
   '/vakmensen': typeof VakmensenRouteWithChildren
   '/word-professional': typeof WordProfessionalRoute
+  '/cms/$slug': typeof CmsSlugRoute
   '/dashboard/abonnement': typeof DashboardAbonnementRoute
   '/dashboard/berichten': typeof DashboardBerichtenRoute
   '/dashboard/instellingen': typeof DashboardInstellingenRoute
@@ -199,6 +217,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/dashboard'
     | '/hoe-werkt-het'
     | '/inloggen'
@@ -207,6 +226,7 @@ export interface FileRouteTypes {
     | '/prijzen'
     | '/vakmensen'
     | '/word-professional'
+    | '/cms/$slug'
     | '/dashboard/abonnement'
     | '/dashboard/berichten'
     | '/dashboard/instellingen'
@@ -221,11 +241,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/hoe-werkt-het'
     | '/inloggen'
     | '/plaats-opdracht'
     | '/prijzen'
     | '/word-professional'
+    | '/cms/$slug'
     | '/dashboard/abonnement'
     | '/dashboard/berichten'
     | '/dashboard/instellingen'
@@ -240,6 +262,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/dashboard'
     | '/hoe-werkt-het'
     | '/inloggen'
@@ -248,6 +271,7 @@ export interface FileRouteTypes {
     | '/prijzen'
     | '/vakmensen'
     | '/word-professional'
+    | '/cms/$slug'
     | '/dashboard/abonnement'
     | '/dashboard/berichten'
     | '/dashboard/instellingen'
@@ -263,6 +287,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   HoeWerktHetRoute: typeof HoeWerktHetRoute
   InloggenRoute: typeof InloggenRoute
@@ -271,6 +296,7 @@ export interface RootRouteChildren {
   PrijzenRoute: typeof PrijzenRoute
   VakmensenRoute: typeof VakmensenRouteWithChildren
   WordProfessionalRoute: typeof WordProfessionalRoute
+  CmsSlugRoute: typeof CmsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -329,6 +355,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -415,6 +448,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAbonnementRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/cms/$slug': {
+      id: '/cms/$slug'
+      path: '/cms/$slug'
+      fullPath: '/cms/$slug'
+      preLoaderRoute: typeof CmsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -472,6 +512,7 @@ const VakmensenRouteWithChildren = VakmensenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   DashboardRoute: DashboardRouteWithChildren,
   HoeWerktHetRoute: HoeWerktHetRoute,
   InloggenRoute: InloggenRoute,
@@ -480,17 +521,8 @@ const rootRouteChildren: RootRouteChildren = {
   PrijzenRoute: PrijzenRoute,
   VakmensenRoute: VakmensenRouteWithChildren,
   WordProfessionalRoute: WordProfessionalRoute,
+  CmsSlugRoute: CmsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

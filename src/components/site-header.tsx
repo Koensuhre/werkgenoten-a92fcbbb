@@ -35,7 +35,7 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="hidden items-center gap-2 md:flex">
-            <Link to="/inloggen" className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground">
+            <Link to="/auth" className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground">
               Inloggen
             </Link>
             <Link
@@ -61,7 +61,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2">
-              <Link to="/inloggen" className="flex-1 rounded-md border border-border px-3 py-2 text-center text-sm">
+              <Link to="/auth" className="flex-1 rounded-md border border-border px-3 py-2 text-center text-sm">
                 Inloggen
               </Link>
               <Link to="/plaats-opdracht" className="flex-1 rounded-md bg-brand-gradient px-3 py-2 text-center text-sm font-medium text-brand-foreground">
