@@ -34,6 +34,7 @@ import { Route as AuthenticatedDashboardInstellingenRouteImport } from './routes
 import { Route as AuthenticatedDashboardBerichtenRouteImport } from './routes/_authenticated/dashboard.berichten'
 import { Route as AuthenticatedDashboardAbonnementRouteImport } from './routes/_authenticated/dashboard.abonnement'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
+import { Route as AuthenticatedAdminAdminOpdrachtenRouteImport } from './routes/_authenticated/_admin/admin.opdrachten'
 import { Route as AuthenticatedAdminAdminGebruikersRouteImport } from './routes/_authenticated/_admin/admin.gebruikers'
 
 const WordProfessionalRoute = WordProfessionalRouteImport.update({
@@ -167,6 +168,12 @@ const AuthenticatedAdminAdminIndexRoute =
     path: '/admin/',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminAdminOpdrachtenRoute =
+  AuthenticatedAdminAdminOpdrachtenRouteImport.update({
+    id: '/admin/opdrachten',
+    path: '/admin/opdrachten',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAdminGebruikersRoute =
   AuthenticatedAdminAdminGebruikersRouteImport.update({
     id: '/admin/gebruikers',
@@ -198,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/reviews': typeof AuthenticatedDashboardReviewsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
+  '/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -221,6 +229,7 @@ export interface FileRoutesByTo {
   '/dashboard/reviews': typeof AuthenticatedDashboardReviewsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
+  '/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -250,6 +259,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/reviews': typeof AuthenticatedDashboardReviewsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/_admin/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
+  '/_authenticated/_admin/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/dashboard/reviews'
     | '/dashboard/'
     | '/admin/gebruikers'
+    | '/admin/opdrachten'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -301,6 +312,7 @@ export interface FileRouteTypes {
     | '/dashboard/reviews'
     | '/dashboard'
     | '/admin/gebruikers'
+    | '/admin/opdrachten'
     | '/admin'
   id:
     | '__root__'
@@ -329,6 +341,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/reviews'
     | '/_authenticated/dashboard/'
     | '/_authenticated/_admin/admin/gebruikers'
+    | '/_authenticated/_admin/admin/opdrachten'
     | '/_authenticated/_admin/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -523,6 +536,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/_admin/admin/opdrachten': {
+      id: '/_authenticated/_admin/admin/opdrachten'
+      path: '/admin/opdrachten'
+      fullPath: '/admin/opdrachten'
+      preLoaderRoute: typeof AuthenticatedAdminAdminOpdrachtenRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/_admin/admin/gebruikers': {
       id: '/_authenticated/_admin/admin/gebruikers'
       path: '/admin/gebruikers'
@@ -535,6 +555,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAdminGebruikersRoute: typeof AuthenticatedAdminAdminGebruikersRoute
+  AuthenticatedAdminAdminOpdrachtenRoute: typeof AuthenticatedAdminAdminOpdrachtenRoute
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
 }
 
@@ -542,6 +563,8 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
   {
     AuthenticatedAdminAdminGebruikersRoute:
       AuthenticatedAdminAdminGebruikersRoute,
+    AuthenticatedAdminAdminOpdrachtenRoute:
+      AuthenticatedAdminAdminOpdrachtenRoute,
     AuthenticatedAdminAdminIndexRoute: AuthenticatedAdminAdminIndexRoute,
   }
 
