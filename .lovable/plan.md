@@ -1,42 +1,42 @@
 ## Doel
-Jij (koensuhre@gmail.com) kunt inloggen als beheerder en krijgt een basis admin-paneel op `/admin`.
+De Vakwerk-frontend laten lezen uit jouw tijdelijke WordPress op `https://xenodochial-mclean.45-82-188-50.plesk.page` via WPGraphQL, zodat pagina's, menu's, theme-tokens en footer vanuit WordPress komen in plaats van de mock-data.
 
-## Stappen
+## Vereiste actie aan jouw kant (WordPress)
+De site heeft nu géén actieve GraphQL-/REST-laag. Voordat de koppeling werkt moet je in WP-admin het volgende doen:
 
-### 1. Auto-promotie tot admin
-Migratie met een trigger op `auth.users`: bij signup met e-mail `koensuhre@gmail.com` wordt naast de standaard `client`-rol ook de `admin`-rol toegekend in `public.user_roles`. Bestaat het account al, dan wordt het in dezelfde migratie meteen geüpgraded.
+1. **Plugin installeren & activeren**: `WPGraphQL` (gratis, via Plugins → Nieuwe toevoegen).
+2. Aanbevolen extra plugins (alleen nodig als je ACF/Gutenberg-blokken via GraphQL wilt blootleggen):
+   - `WPGraphQL for ACF` (alleen als je ACF gebruikt)
+   - `WPGraphQL Smart Cache` (optioneel, voor performance)
+3. **Permalinks** op iets anders dan "Plain" zetten (Instellingen → Permalinks → bv. "Berichtnaam" → Opslaan). Anders blijft `/graphql` 404 geven.
+4. Controleer daarna in je browser:
+   `https://xenodochial-mclean.45-82-188-50.plesk.page/graphql?query={__typename}` → moet JSON teruggeven, geen HTML/404.
 
-### 2. Hook in de frontend
-- `useCurrentUserRoles` bestaat al — daar leunen we op.
-- Helper `useIsAdmin()` toevoegen.
-- In `SiteHeader` een "Admin"-link tonen wanneer ingelogde gebruiker admin is.
+Laat me weten wanneer dit klaar is — dan kan ik de koppeling daadwerkelijk activeren.
 
-### 3. Admin-route gating
-- Nieuwe pathless layout `src/routes/_authenticated/_admin/route.tsx` die client-side checkt of de user admin is via `has_role`; zo niet → redirect naar `/dashboard`.
-- Server-side blijft RLS de echte gate (policies gebruiken al `has_role(..., 'admin')`).
+## Wat ik daarna doe in de code
 
-### 4. Admin-paneel (basis CRUD)
-Onder `/admin`:
-- **`/admin`** — overzicht met tellingen (users, opdrachten open/afgerond, categorieën, reviews).
-- **`/admin/gebruikers`** — lijst profielen + rollen; rol toekennen/intrekken (admin/professional/client) via insert/delete in `user_roles`.
-- **`/admin/opdrachten`** — lijst alle jobs, status wijzigen, verwijderen.
-- **`/admin/categorieen`** — CRUD op `categories` (admin write policy bestaat al).
-- **`/admin/reviews`** — lijst + verwijderen (modereren).
+1. **Endpoint configureren** in `.env`:
+   ```
+   VITE_WP_GRAPHQL_URL=https://xenodochial-mclean.45-82-188-50.plesk.page/graphql
+   ```
+   De bestaande client in `src/services/wpgraphql/client.ts` schakelt automatisch over van mock naar de echte WordPress zodra deze variabele gezet is — geen verdere codewijziging nodig.
 
-Alle data via `supabase` client + bestaande RLS (admin-policies). Tabel-UI met bestaande shadcn `Table`-componenten.
+2. **Verbinding testen** vanaf de server: een korte GraphQL-call (`{__schema{queryType{name}}}`) om te bevestigen dat WPGraphQL antwoordt en CORS goed staat.
 
-### 5. Inlogflow voor jou
-Geen wachtwoord vooraf. Stappen voor jou na deploy:
-1. Ga naar `/auth` → "Maak een account" → vul `koensuhre@gmail.com` + wachtwoord.
-2. Trigger geeft je direct de admin-rol.
-3. Header toont "Admin" → klikken → `/admin`.
+3. **Schema-afstemming controleren**. De frontend verwacht een schema met o.a.:
+   - `page(slug: String!) { slug title seo{...} blocksJson }`
+   - `themeSettings { tokensJson }`
+   - `menu(location: String!) { ... }`
+   - `footer { ... }`
+   
+   Vanilla WPGraphQL levert dit **niet** standaard — `blocksJson`, `themeSettings` en `footer` zijn custom velden die op WP-zijde toegevoegd moeten worden (via een klein plugin-bestand of een snippet in `functions.php`). Als die er nog niet zijn, val ik per query terug op een veilige `null` zodat de site niet breekt, en lever ik je de PHP-snippet aan die je in WordPress moet plaatsen.
 
-## Technisch
-- Migratie: `CREATE OR REPLACE FUNCTION public.grant_admin_if_owner()` (SECURITY DEFINER) + `AFTER INSERT` trigger op `auth.users`; plus eenmalige `INSERT ... ON CONFLICT DO NOTHING` voor het geval het account al bestaat.
-- Geen wijziging aan bestaande `handle_new_user` trigger; we voegen een tweede AFTER INSERT trigger toe.
-- Routes onder `_authenticated/_admin/` erven al de auth-gate van `_authenticated`.
+4. **CORS**: indien de browser blokkeert op CORS, voeg ik de instructie toe om in WordPress (via plugin of `.htaccess`) `Access-Control-Allow-Origin` toe te staan voor je Lovable preview/published URL.
 
-## Buiten scope
-- E-mailbevestiging uitschakelen (laat staan zoals nu).
-- Wachtwoord-reset pagina.
-- Audit log van admin-acties.
+## Buiten scope (nu nog niet)
+- Authenticated previews / JWT-token (`VITE_WP_GRAPHQL_TOKEN`) — alleen nodig als je niet-gepubliceerde concepten wil zien.
+- Migratie van bestaande hardcoded routes (`/`, `/prijzen`, etc.) naar volledig CMS-gestuurd. Eerst koppelen, daarna kunnen we per pagina beslissen of WP de bron wordt.
+
+## Vraag
+Wil je dat ik nu alvast stap 1 (endpoint in `.env`) doe zodat de schakelaar omgaat zodra jij WPGraphQL hebt geïnstalleerd? Of wachten we tot WordPress klaar is en doen we het in één keer met test erbij?
