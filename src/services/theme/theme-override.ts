@@ -22,7 +22,8 @@ export const themeOverrideQuery = () =>
 export async function saveThemeOverride(tokens: ThemeTokens) {
   const { error } = await supabase
     .from("theme_settings")
-    .upsert({ id: "global", tokens: tokens as unknown as Record<string, unknown> });
+    // ThemeTokens is a structured object stored as jsonb — cast to satisfy generated Json type.
+    .upsert({ id: "global", tokens: tokens as unknown as never });
   if (error) throw error;
 }
 

@@ -34,6 +34,7 @@ import { Route as AuthenticatedDashboardInstellingenRouteImport } from './routes
 import { Route as AuthenticatedDashboardBerichtenRouteImport } from './routes/_authenticated/dashboard.berichten'
 import { Route as AuthenticatedDashboardAbonnementRouteImport } from './routes/_authenticated/dashboard.abonnement'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
+import { Route as AuthenticatedAdminAdminThemaRouteImport } from './routes/_authenticated/_admin/admin.thema'
 import { Route as AuthenticatedAdminAdminReviewsRouteImport } from './routes/_authenticated/_admin/admin.reviews'
 import { Route as AuthenticatedAdminAdminOpdrachtenRouteImport } from './routes/_authenticated/_admin/admin.opdrachten'
 import { Route as AuthenticatedAdminAdminGebruikersRouteImport } from './routes/_authenticated/_admin/admin.gebruikers'
@@ -170,6 +171,12 @@ const AuthenticatedAdminAdminIndexRoute =
     path: '/admin/',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminAdminThemaRoute =
+  AuthenticatedAdminAdminThemaRouteImport.update({
+    id: '/admin/thema',
+    path: '/admin/thema',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAdminReviewsRoute =
   AuthenticatedAdminAdminReviewsRouteImport.update({
     id: '/admin/reviews',
@@ -222,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
   '/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
+  '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -248,6 +256,7 @@ export interface FileRoutesByTo {
   '/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
   '/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
+  '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -280,6 +289,7 @@ export interface FileRoutesById {
   '/_authenticated/_admin/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
   '/_authenticated/_admin/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/_authenticated/_admin/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
+  '/_authenticated/_admin/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -311,6 +321,7 @@ export interface FileRouteTypes {
     | '/admin/gebruikers'
     | '/admin/opdrachten'
     | '/admin/reviews'
+    | '/admin/thema'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/admin/gebruikers'
     | '/admin/opdrachten'
     | '/admin/reviews'
+    | '/admin/thema'
     | '/admin'
   id:
     | '__root__'
@@ -368,6 +380,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_admin/admin/gebruikers'
     | '/_authenticated/_admin/admin/opdrachten'
     | '/_authenticated/_admin/admin/reviews'
+    | '/_authenticated/_admin/admin/thema'
     | '/_authenticated/_admin/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -562,6 +575,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/_admin/admin/thema': {
+      id: '/_authenticated/_admin/admin/thema'
+      path: '/admin/thema'
+      fullPath: '/admin/thema'
+      preLoaderRoute: typeof AuthenticatedAdminAdminThemaRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/_admin/admin/reviews': {
       id: '/_authenticated/_admin/admin/reviews'
       path: '/admin/reviews'
@@ -598,6 +618,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAdminGebruikersRoute: typeof AuthenticatedAdminAdminGebruikersRoute
   AuthenticatedAdminAdminOpdrachtenRoute: typeof AuthenticatedAdminAdminOpdrachtenRoute
   AuthenticatedAdminAdminReviewsRoute: typeof AuthenticatedAdminAdminReviewsRoute
+  AuthenticatedAdminAdminThemaRoute: typeof AuthenticatedAdminAdminThemaRoute
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
 }
 
@@ -610,6 +631,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
     AuthenticatedAdminAdminOpdrachtenRoute:
       AuthenticatedAdminAdminOpdrachtenRoute,
     AuthenticatedAdminAdminReviewsRoute: AuthenticatedAdminAdminReviewsRoute,
+    AuthenticatedAdminAdminThemaRoute: AuthenticatedAdminAdminThemaRoute,
     AuthenticatedAdminAdminIndexRoute: AuthenticatedAdminAdminIndexRoute,
   }
 
