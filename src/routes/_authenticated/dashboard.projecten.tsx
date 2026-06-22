@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { jobs } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/dashboard/projecten")({
+export const Route = createFileRoute("/_authenticated/dashboard/projecten")({
   component: () => (
     <div>
       <h1 className="text-2xl font-semibold">Projecten</h1>

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Star } from "lucide-react";
 
-export const Route = createFileRoute("/dashboard/reviews")({
+export const Route = createFileRoute("/_authenticated/dashboard/reviews")({
   component: () => (
     <div>
       <h1 className="text-2xl font-semibold">Reviews</h1>

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Briefcase, MessageCircle, Star, TrendingUp } from "lucide-react";
 import { jobs } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/dashboard/")({
+export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: DashboardHome,
 });
 

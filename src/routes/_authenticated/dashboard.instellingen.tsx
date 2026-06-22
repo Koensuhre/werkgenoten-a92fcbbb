@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/dashboard/instellingen")({
+export const Route = createFileRoute("/_authenticated/dashboard/instellingen")({
   component: () => (
     <div>
       <h1 className="text-2xl font-semibold">Instellingen</h1>

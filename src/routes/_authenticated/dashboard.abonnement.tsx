@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CheckCircle2 } from "lucide-react";
 import { plans } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/dashboard/abonnement")({
+export const Route = createFileRoute("/_authenticated/dashboard/abonnement")({
   component: () => (
     <div>
       <h1 className="text-2xl font-semibold">Abonnement</h1>

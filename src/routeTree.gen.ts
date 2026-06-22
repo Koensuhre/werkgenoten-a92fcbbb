@@ -16,21 +16,22 @@ import { Route as PlaatsOpdrachtRouteImport } from './routes/plaats-opdracht'
 import { Route as OpdrachtenRouteImport } from './routes/opdrachten'
 import { Route as InloggenRouteImport } from './routes/inloggen'
 import { Route as HoeWerktHetRouteImport } from './routes/hoe-werkt-het'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VakmensenIndexRouteImport } from './routes/vakmensen.index'
 import { Route as OpdrachtenIndexRouteImport } from './routes/opdrachten.index'
-import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as VakmensenSlugRouteImport } from './routes/vakmensen.$slug'
 import { Route as OpdrachtenSlugRouteImport } from './routes/opdrachten.$slug'
-import { Route as DashboardReviewsRouteImport } from './routes/dashboard.reviews'
-import { Route as DashboardProjectenRouteImport } from './routes/dashboard.projecten'
-import { Route as DashboardLeadsRouteImport } from './routes/dashboard.leads'
-import { Route as DashboardInstellingenRouteImport } from './routes/dashboard.instellingen'
-import { Route as DashboardBerichtenRouteImport } from './routes/dashboard.berichten'
-import { Route as DashboardAbonnementRouteImport } from './routes/dashboard.abonnement'
 import { Route as CmsSlugRouteImport } from './routes/cms.$slug'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardReviewsRouteImport } from './routes/_authenticated/dashboard.reviews'
+import { Route as AuthenticatedDashboardProjectenRouteImport } from './routes/_authenticated/dashboard.projecten'
+import { Route as AuthenticatedDashboardLeadsRouteImport } from './routes/_authenticated/dashboard.leads'
+import { Route as AuthenticatedDashboardInstellingenRouteImport } from './routes/_authenticated/dashboard.instellingen'
+import { Route as AuthenticatedDashboardBerichtenRouteImport } from './routes/_authenticated/dashboard.berichten'
+import { Route as AuthenticatedDashboardAbonnementRouteImport } from './routes/_authenticated/dashboard.abonnement'
 
 const WordProfessionalRoute = WordProfessionalRouteImport.update({
   id: '/word-professional',
@@ -67,14 +68,13 @@ const HoeWerktHetRoute = HoeWerktHetRouteImport.update({
   path: '/hoe-werkt-het',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -92,11 +92,6 @@ const OpdrachtenIndexRoute = OpdrachtenIndexRouteImport.update({
   path: '/',
   getParentRoute: () => OpdrachtenRoute,
 } as any)
-const DashboardIndexRoute = DashboardIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DashboardRoute,
-} as any)
 const VakmensenSlugRoute = VakmensenSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -107,46 +102,62 @@ const OpdrachtenSlugRoute = OpdrachtenSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => OpdrachtenRoute,
 } as any)
-const DashboardReviewsRoute = DashboardReviewsRouteImport.update({
-  id: '/reviews',
-  path: '/reviews',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardProjectenRoute = DashboardProjectenRouteImport.update({
-  id: '/projecten',
-  path: '/projecten',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardLeadsRoute = DashboardLeadsRouteImport.update({
-  id: '/leads',
-  path: '/leads',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardInstellingenRoute = DashboardInstellingenRouteImport.update({
-  id: '/instellingen',
-  path: '/instellingen',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardBerichtenRoute = DashboardBerichtenRouteImport.update({
-  id: '/berichten',
-  path: '/berichten',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardAbonnementRoute = DashboardAbonnementRouteImport.update({
-  id: '/abonnement',
-  path: '/abonnement',
-  getParentRoute: () => DashboardRoute,
-} as any)
 const CmsSlugRoute = CmsSlugRouteImport.update({
   id: '/cms/$slug',
   path: '/cms/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardReviewsRoute =
+  AuthenticatedDashboardReviewsRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardProjectenRoute =
+  AuthenticatedDashboardProjectenRouteImport.update({
+    id: '/projecten',
+    path: '/projecten',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardLeadsRoute =
+  AuthenticatedDashboardLeadsRouteImport.update({
+    id: '/leads',
+    path: '/leads',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardInstellingenRoute =
+  AuthenticatedDashboardInstellingenRouteImport.update({
+    id: '/instellingen',
+    path: '/instellingen',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardBerichtenRoute =
+  AuthenticatedDashboardBerichtenRouteImport.update({
+    id: '/berichten',
+    path: '/berichten',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardAbonnementRoute =
+  AuthenticatedDashboardAbonnementRouteImport.update({
+    id: '/abonnement',
+    path: '/abonnement',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/dashboard': typeof DashboardRouteWithChildren
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
   '/opdrachten': typeof OpdrachtenRouteWithChildren
@@ -154,18 +165,19 @@ export interface FileRoutesByFullPath {
   '/prijzen': typeof PrijzenRoute
   '/vakmensen': typeof VakmensenRouteWithChildren
   '/word-professional': typeof WordProfessionalRoute
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/cms/$slug': typeof CmsSlugRoute
-  '/dashboard/abonnement': typeof DashboardAbonnementRoute
-  '/dashboard/berichten': typeof DashboardBerichtenRoute
-  '/dashboard/instellingen': typeof DashboardInstellingenRoute
-  '/dashboard/leads': typeof DashboardLeadsRoute
-  '/dashboard/projecten': typeof DashboardProjectenRoute
-  '/dashboard/reviews': typeof DashboardReviewsRoute
   '/opdrachten/$slug': typeof OpdrachtenSlugRoute
   '/vakmensen/$slug': typeof VakmensenSlugRoute
-  '/dashboard/': typeof DashboardIndexRoute
   '/opdrachten/': typeof OpdrachtenIndexRoute
   '/vakmensen/': typeof VakmensenIndexRoute
+  '/dashboard/abonnement': typeof AuthenticatedDashboardAbonnementRoute
+  '/dashboard/berichten': typeof AuthenticatedDashboardBerichtenRoute
+  '/dashboard/instellingen': typeof AuthenticatedDashboardInstellingenRoute
+  '/dashboard/leads': typeof AuthenticatedDashboardLeadsRoute
+  '/dashboard/projecten': typeof AuthenticatedDashboardProjectenRoute
+  '/dashboard/reviews': typeof AuthenticatedDashboardReviewsRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -176,23 +188,23 @@ export interface FileRoutesByTo {
   '/prijzen': typeof PrijzenRoute
   '/word-professional': typeof WordProfessionalRoute
   '/cms/$slug': typeof CmsSlugRoute
-  '/dashboard/abonnement': typeof DashboardAbonnementRoute
-  '/dashboard/berichten': typeof DashboardBerichtenRoute
-  '/dashboard/instellingen': typeof DashboardInstellingenRoute
-  '/dashboard/leads': typeof DashboardLeadsRoute
-  '/dashboard/projecten': typeof DashboardProjectenRoute
-  '/dashboard/reviews': typeof DashboardReviewsRoute
   '/opdrachten/$slug': typeof OpdrachtenSlugRoute
   '/vakmensen/$slug': typeof VakmensenSlugRoute
-  '/dashboard': typeof DashboardIndexRoute
   '/opdrachten': typeof OpdrachtenIndexRoute
   '/vakmensen': typeof VakmensenIndexRoute
+  '/dashboard/abonnement': typeof AuthenticatedDashboardAbonnementRoute
+  '/dashboard/berichten': typeof AuthenticatedDashboardBerichtenRoute
+  '/dashboard/instellingen': typeof AuthenticatedDashboardInstellingenRoute
+  '/dashboard/leads': typeof AuthenticatedDashboardLeadsRoute
+  '/dashboard/projecten': typeof AuthenticatedDashboardProjectenRoute
+  '/dashboard/reviews': typeof AuthenticatedDashboardReviewsRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/dashboard': typeof DashboardRouteWithChildren
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
   '/opdrachten': typeof OpdrachtenRouteWithChildren
@@ -200,25 +212,25 @@ export interface FileRoutesById {
   '/prijzen': typeof PrijzenRoute
   '/vakmensen': typeof VakmensenRouteWithChildren
   '/word-professional': typeof WordProfessionalRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/cms/$slug': typeof CmsSlugRoute
-  '/dashboard/abonnement': typeof DashboardAbonnementRoute
-  '/dashboard/berichten': typeof DashboardBerichtenRoute
-  '/dashboard/instellingen': typeof DashboardInstellingenRoute
-  '/dashboard/leads': typeof DashboardLeadsRoute
-  '/dashboard/projecten': typeof DashboardProjectenRoute
-  '/dashboard/reviews': typeof DashboardReviewsRoute
   '/opdrachten/$slug': typeof OpdrachtenSlugRoute
   '/vakmensen/$slug': typeof VakmensenSlugRoute
-  '/dashboard/': typeof DashboardIndexRoute
   '/opdrachten/': typeof OpdrachtenIndexRoute
   '/vakmensen/': typeof VakmensenIndexRoute
+  '/_authenticated/dashboard/abonnement': typeof AuthenticatedDashboardAbonnementRoute
+  '/_authenticated/dashboard/berichten': typeof AuthenticatedDashboardBerichtenRoute
+  '/_authenticated/dashboard/instellingen': typeof AuthenticatedDashboardInstellingenRoute
+  '/_authenticated/dashboard/leads': typeof AuthenticatedDashboardLeadsRoute
+  '/_authenticated/dashboard/projecten': typeof AuthenticatedDashboardProjectenRoute
+  '/_authenticated/dashboard/reviews': typeof AuthenticatedDashboardReviewsRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
-    | '/dashboard'
     | '/hoe-werkt-het'
     | '/inloggen'
     | '/opdrachten'
@@ -226,18 +238,19 @@ export interface FileRouteTypes {
     | '/prijzen'
     | '/vakmensen'
     | '/word-professional'
+    | '/dashboard'
     | '/cms/$slug'
+    | '/opdrachten/$slug'
+    | '/vakmensen/$slug'
+    | '/opdrachten/'
+    | '/vakmensen/'
     | '/dashboard/abonnement'
     | '/dashboard/berichten'
     | '/dashboard/instellingen'
     | '/dashboard/leads'
     | '/dashboard/projecten'
     | '/dashboard/reviews'
-    | '/opdrachten/$slug'
-    | '/vakmensen/$slug'
     | '/dashboard/'
-    | '/opdrachten/'
-    | '/vakmensen/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -248,22 +261,22 @@ export interface FileRouteTypes {
     | '/prijzen'
     | '/word-professional'
     | '/cms/$slug'
+    | '/opdrachten/$slug'
+    | '/vakmensen/$slug'
+    | '/opdrachten'
+    | '/vakmensen'
     | '/dashboard/abonnement'
     | '/dashboard/berichten'
     | '/dashboard/instellingen'
     | '/dashboard/leads'
     | '/dashboard/projecten'
     | '/dashboard/reviews'
-    | '/opdrachten/$slug'
-    | '/vakmensen/$slug'
     | '/dashboard'
-    | '/opdrachten'
-    | '/vakmensen'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/auth'
-    | '/dashboard'
     | '/hoe-werkt-het'
     | '/inloggen'
     | '/opdrachten'
@@ -271,24 +284,25 @@ export interface FileRouteTypes {
     | '/prijzen'
     | '/vakmensen'
     | '/word-professional'
+    | '/_authenticated/dashboard'
     | '/cms/$slug'
-    | '/dashboard/abonnement'
-    | '/dashboard/berichten'
-    | '/dashboard/instellingen'
-    | '/dashboard/leads'
-    | '/dashboard/projecten'
-    | '/dashboard/reviews'
     | '/opdrachten/$slug'
     | '/vakmensen/$slug'
-    | '/dashboard/'
     | '/opdrachten/'
     | '/vakmensen/'
+    | '/_authenticated/dashboard/abonnement'
+    | '/_authenticated/dashboard/berichten'
+    | '/_authenticated/dashboard/instellingen'
+    | '/_authenticated/dashboard/leads'
+    | '/_authenticated/dashboard/projecten'
+    | '/_authenticated/dashboard/reviews'
+    | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  DashboardRoute: typeof DashboardRouteWithChildren
   HoeWerktHetRoute: typeof HoeWerktHetRoute
   InloggenRoute: typeof InloggenRoute
   OpdrachtenRoute: typeof OpdrachtenRouteWithChildren
@@ -350,18 +364,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HoeWerktHetRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -385,13 +399,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdrachtenIndexRouteImport
       parentRoute: typeof OpdrachtenRoute
     }
-    '/dashboard/': {
-      id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof DashboardRoute
-    }
     '/vakmensen/$slug': {
       id: '/vakmensen/$slug'
       path: '/$slug'
@@ -406,48 +413,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpdrachtenSlugRouteImport
       parentRoute: typeof OpdrachtenRoute
     }
-    '/dashboard/reviews': {
-      id: '/dashboard/reviews'
-      path: '/reviews'
-      fullPath: '/dashboard/reviews'
-      preLoaderRoute: typeof DashboardReviewsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/projecten': {
-      id: '/dashboard/projecten'
-      path: '/projecten'
-      fullPath: '/dashboard/projecten'
-      preLoaderRoute: typeof DashboardProjectenRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/leads': {
-      id: '/dashboard/leads'
-      path: '/leads'
-      fullPath: '/dashboard/leads'
-      preLoaderRoute: typeof DashboardLeadsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/instellingen': {
-      id: '/dashboard/instellingen'
-      path: '/instellingen'
-      fullPath: '/dashboard/instellingen'
-      preLoaderRoute: typeof DashboardInstellingenRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/berichten': {
-      id: '/dashboard/berichten'
-      path: '/berichten'
-      fullPath: '/dashboard/berichten'
-      preLoaderRoute: typeof DashboardBerichtenRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/abonnement': {
-      id: '/dashboard/abonnement'
-      path: '/abonnement'
-      fullPath: '/dashboard/abonnement'
-      preLoaderRoute: typeof DashboardAbonnementRouteImport
-      parentRoute: typeof DashboardRoute
-    }
     '/cms/$slug': {
       id: '/cms/$slug'
       path: '/cms/$slug'
@@ -455,32 +420,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/reviews': {
+      id: '/_authenticated/dashboard/reviews'
+      path: '/reviews'
+      fullPath: '/dashboard/reviews'
+      preLoaderRoute: typeof AuthenticatedDashboardReviewsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/projecten': {
+      id: '/_authenticated/dashboard/projecten'
+      path: '/projecten'
+      fullPath: '/dashboard/projecten'
+      preLoaderRoute: typeof AuthenticatedDashboardProjectenRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/leads': {
+      id: '/_authenticated/dashboard/leads'
+      path: '/leads'
+      fullPath: '/dashboard/leads'
+      preLoaderRoute: typeof AuthenticatedDashboardLeadsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/instellingen': {
+      id: '/_authenticated/dashboard/instellingen'
+      path: '/instellingen'
+      fullPath: '/dashboard/instellingen'
+      preLoaderRoute: typeof AuthenticatedDashboardInstellingenRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/berichten': {
+      id: '/_authenticated/dashboard/berichten'
+      path: '/berichten'
+      fullPath: '/dashboard/berichten'
+      preLoaderRoute: typeof AuthenticatedDashboardBerichtenRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/abonnement': {
+      id: '/_authenticated/dashboard/abonnement'
+      path: '/abonnement'
+      fullPath: '/dashboard/abonnement'
+      preLoaderRoute: typeof AuthenticatedDashboardAbonnementRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
   }
 }
 
-interface DashboardRouteChildren {
-  DashboardAbonnementRoute: typeof DashboardAbonnementRoute
-  DashboardBerichtenRoute: typeof DashboardBerichtenRoute
-  DashboardInstellingenRoute: typeof DashboardInstellingenRoute
-  DashboardLeadsRoute: typeof DashboardLeadsRoute
-  DashboardProjectenRoute: typeof DashboardProjectenRoute
-  DashboardReviewsRoute: typeof DashboardReviewsRoute
-  DashboardIndexRoute: typeof DashboardIndexRoute
+interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardAbonnementRoute: typeof AuthenticatedDashboardAbonnementRoute
+  AuthenticatedDashboardBerichtenRoute: typeof AuthenticatedDashboardBerichtenRoute
+  AuthenticatedDashboardInstellingenRoute: typeof AuthenticatedDashboardInstellingenRoute
+  AuthenticatedDashboardLeadsRoute: typeof AuthenticatedDashboardLeadsRoute
+  AuthenticatedDashboardProjectenRoute: typeof AuthenticatedDashboardProjectenRoute
+  AuthenticatedDashboardReviewsRoute: typeof AuthenticatedDashboardReviewsRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
-const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardAbonnementRoute: DashboardAbonnementRoute,
-  DashboardBerichtenRoute: DashboardBerichtenRoute,
-  DashboardInstellingenRoute: DashboardInstellingenRoute,
-  DashboardLeadsRoute: DashboardLeadsRoute,
-  DashboardProjectenRoute: DashboardProjectenRoute,
-  DashboardReviewsRoute: DashboardReviewsRoute,
-  DashboardIndexRoute: DashboardIndexRoute,
+const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+  {
+    AuthenticatedDashboardAbonnementRoute:
+      AuthenticatedDashboardAbonnementRoute,
+    AuthenticatedDashboardBerichtenRoute: AuthenticatedDashboardBerichtenRoute,
+    AuthenticatedDashboardInstellingenRoute:
+      AuthenticatedDashboardInstellingenRoute,
+    AuthenticatedDashboardLeadsRoute: AuthenticatedDashboardLeadsRoute,
+    AuthenticatedDashboardProjectenRoute: AuthenticatedDashboardProjectenRoute,
+    AuthenticatedDashboardReviewsRoute: AuthenticatedDashboardReviewsRoute,
+    AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  }
+
+const AuthenticatedDashboardRouteWithChildren =
+  AuthenticatedDashboardRoute._addFileChildren(
+    AuthenticatedDashboardRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
 }
 
-const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
-  DashboardRouteChildren,
-)
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface OpdrachtenRouteChildren {
   OpdrachtenSlugRoute: typeof OpdrachtenSlugRoute
@@ -512,8 +548,8 @@ const VakmensenRouteWithChildren = VakmensenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  DashboardRoute: DashboardRouteWithChildren,
   HoeWerktHetRoute: HoeWerktHetRoute,
   InloggenRoute: InloggenRoute,
   OpdrachtenRoute: OpdrachtenRouteWithChildren,
