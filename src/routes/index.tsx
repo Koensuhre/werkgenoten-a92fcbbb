@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2, Sparkles, Shield, Clock, Star, Zap } from "lucide-react";
 import { categories, testimonials, stats, plans, jobs } from "@/lib/mock-data";
+import { CmsFallback } from "@/components/cms/CmsFallback";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,17 +19,22 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <>
-      <Hero />
-      <Trust />
-      <HowItWorks />
-      <Categories />
-      <FeaturedJobs />
-      <Stats />
-      <Testimonials />
-      <Pricing />
-      <CTA />
-    </>
+    <CmsFallback
+      slug="home"
+      fallback={
+        <>
+          <Hero />
+          <Trust />
+          <HowItWorks />
+          <Categories />
+          <FeaturedJobs />
+          <Stats />
+          <Testimonials />
+          <Pricing />
+          <CTA />
+        </>
+      }
+    />
   );
 }
 
