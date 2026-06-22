@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LayoutDashboard, Users, Briefcase, Tags, Star } from "lucide-react";
+import { LayoutDashboard, Users, Briefcase, Tags, Star, Palette } from "lucide-react";
 import { useCurrentUserRoles } from "@/hooks/use-current-profile";
 
 export const Route = createFileRoute("/_authenticated/_admin")({
@@ -19,6 +19,7 @@ const nav = [
   { to: "/admin/opdrachten", label: "Opdrachten", icon: Briefcase, exact: false },
   { to: "/admin/categorieen", label: "Categorieën", icon: Tags, exact: false },
   { to: "/admin/reviews", label: "Reviews", icon: Star, exact: false },
+  { to: "/admin/thema", label: "Thema", icon: Palette, exact: false },
 ] as const;
 
 function AdminLayout() {
