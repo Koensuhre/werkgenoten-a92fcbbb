@@ -14,7 +14,7 @@ function Leads() {
       <p className="text-sm text-muted-foreground">Openstaande opdrachten in jouw vakgebied en regio.</p>
       <div className="mt-6 space-y-2">
         {isLoading && <div className="text-sm text-muted-foreground">Laden…</div>}
-        {!isLoading && filtered.length === 0 && (
+        {!isLoading && jobs.length === 0 && (
           <div className="rounded-xl border border-dashed border-border/60 p-8 text-center text-sm text-muted-foreground">
             Geen openstaande opdrachten op dit moment.
           </div>
