@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, LayoutDashboard, LogOut } from "lucide-react";
+import { Menu, X, LayoutDashboard, LogOut, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession } from "@/hooks/use-session";
+import { useIsAdmin } from "@/hooks/use-current-profile";
 import { supabase } from "@/integrations/supabase/client";
 
 const nav = [
@@ -15,6 +16,7 @@ const nav = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, loading } = useSession();
+  const isAdmin = useIsAdmin();
   const navigate = useNavigate();
 
   async function handleSignOut() {
@@ -47,6 +49,14 @@ export function SiteHeader() {
           <div className="hidden items-center gap-2 md:flex">
             {loading ? null : user ? (
               <>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    <Shield className="h-4 w-4" /> Admin
+                  </Link>
+                )}
                 <Link
                   to="/dashboard"
                   className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
