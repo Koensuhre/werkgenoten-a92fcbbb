@@ -1,7 +1,9 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LayoutDashboard, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSession } from "@/hooks/use-session";
+import { supabase } from "@/integrations/supabase/client";
 
 const nav = [
   { to: "/opdrachten", label: "Opdrachten" },
@@ -12,6 +14,14 @@ const nav = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { user, loading } = useSession();
+  const navigate = useNavigate();
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/", replace: true });
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full">
       <div className="glass border-b border-border/60">
@@ -35,9 +45,26 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="hidden items-center gap-2 md:flex">
-            <Link to="/auth" className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground">
-              Inloggen
-            </Link>
+            {loading ? null : user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
+                >
+                  <LayoutDashboard className="h-4 w-4" /> Dashboard
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
+                >
+                  <LogOut className="h-4 w-4" /> Uitloggen
+                </button>
+              </>
+            ) : (
+              <Link to="/auth" className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground">
+                Inloggen
+              </Link>
+            )}
             <Link
               to="/plaats-opdracht"
               className="rounded-md bg-brand-gradient px-4 py-2 text-sm font-medium text-brand-foreground shadow-glow transition-transform hover:scale-[1.02]"
@@ -61,9 +88,20 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2">
-              <Link to="/auth" className="flex-1 rounded-md border border-border px-3 py-2 text-center text-sm">
-                Inloggen
-              </Link>
+              {user ? (
+                <>
+                  <Link to="/dashboard" onClick={() => setOpen(false)} className="flex-1 rounded-md border border-border px-3 py-2 text-center text-sm">
+                    Dashboard
+                  </Link>
+                  <button onClick={handleSignOut} className="flex-1 rounded-md border border-border px-3 py-2 text-center text-sm">
+                    Uitloggen
+                  </button>
+                </>
+              ) : (
+                <Link to="/auth" onClick={() => setOpen(false)} className="flex-1 rounded-md border border-border px-3 py-2 text-center text-sm">
+                  Inloggen
+                </Link>
+              )}
               <Link to="/plaats-opdracht" className="flex-1 rounded-md bg-brand-gradient px-3 py-2 text-center text-sm font-medium text-brand-foreground">
                 Plaats opdracht
               </Link>

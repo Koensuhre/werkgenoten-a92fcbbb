@@ -207,34 +207,66 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bio: string | null
+          category_id: string | null
           city: string | null
+          company: string | null
           created_at: string
           display_name: string | null
           id: string
           primary_type: Database["public"]["Enums"]["app_role"]
+          rating_avg: number | null
+          response_time: string | null
+          review_count: number
+          slug: string | null
           updated_at: string
+          verified: boolean
+          years_experience: number | null
         }
         Insert: {
           avatar_url?: string | null
           bio?: string | null
+          category_id?: string | null
           city?: string | null
+          company?: string | null
           created_at?: string
           display_name?: string | null
           id: string
           primary_type?: Database["public"]["Enums"]["app_role"]
+          rating_avg?: number | null
+          response_time?: string | null
+          review_count?: number
+          slug?: string | null
           updated_at?: string
+          verified?: boolean
+          years_experience?: number | null
         }
         Update: {
           avatar_url?: string | null
           bio?: string | null
+          category_id?: string | null
           city?: string | null
+          company?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
           primary_type?: Database["public"]["Enums"]["app_role"]
+          rating_avg?: number | null
+          response_time?: string | null
+          review_count?: number
+          slug?: string | null
           updated_at?: string
+          verified?: boolean
+          years_experience?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       quotes: {
         Row: {

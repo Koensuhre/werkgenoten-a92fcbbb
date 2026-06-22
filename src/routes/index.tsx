@@ -1,7 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2, Sparkles, Shield, Clock, Star, Zap } from "lucide-react";
-import { categories, testimonials, stats, plans, jobs } from "@/lib/mock-data";
+import { testimonials, stats, plans } from "@/lib/mock-data";
 import { CmsFallback } from "@/components/cms/CmsFallback";
+import { useCategories, useJobs, formatBudget, timeAgo } from "@/lib/queries";
+
+const CATEGORY_ICONS: Record<string, string> = {
+  schilderwerk: "🎨",
+  elektricien: "⚡",
+  loodgieter: "🚿",
+  timmerman: "🪚",
+  dakwerker: "🏠",
+  tuinman: "🌿",
+  verhuizing: "📦",
+  schoonmaak: "✨",
+};
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -163,6 +175,7 @@ function HowItWorks() {
 }
 
 function Categories() {
+  const { data: categories = [] } = useCategories();
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -179,9 +192,11 @@ function Categories() {
             to="/vakmensen"
             className="group bg-card-gradient shadow-card relative overflow-hidden rounded-xl border border-border/60 p-5 transition-all hover:border-brand/40 hover:shadow-glow"
           >
-            <div className="text-3xl">{c.icon}</div>
+            <div className="text-3xl">{CATEGORY_ICONS[c.slug] ?? "🛠️"}</div>
             <div className="mt-3 font-medium">{c.name}</div>
-            <div className="mt-1 text-xs text-muted-foreground">{c.count.toLocaleString("nl-NL")} pro's</div>
+            {c.description && (
+              <div className="mt-1 text-xs text-muted-foreground line-clamp-1">{c.description}</div>
+            )}
             <ArrowRight className="absolute right-4 top-4 h-4 w-4 text-muted-foreground opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-0.5" />
           </Link>
         ))}
@@ -191,6 +206,8 @@ function Categories() {
 }
 
 function FeaturedJobs() {
+  const { data: allJobs = [] } = useJobs();
+  const jobs = allJobs.slice(0, 6);
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -201,22 +218,22 @@ function FeaturedJobs() {
         <Link to="/opdrachten" className="text-sm text-brand hover:underline">Alle opdrachten →</Link>
       </div>
       <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {jobs.slice(0, 6).map((j) => (
+        {jobs.map((j) => (
           <Link
-            key={j.slug}
+            key={j.id}
             to="/opdrachten/$slug"
             params={{ slug: j.slug }}
             className="bg-card-gradient shadow-card group rounded-xl border border-border/60 p-5 transition-colors hover:border-brand/40"
           >
             <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span className="rounded-md bg-surface-2 px-2 py-0.5">{j.category}</span>
+              <span className="rounded-md bg-surface-2 px-2 py-0.5">{j.category?.name ?? "—"}</span>
               {j.urgent && <span className="inline-flex items-center gap-1 text-brand"><Zap className="h-3 w-3" /> Spoed</span>}
             </div>
             <h3 className="mt-3 font-semibold leading-snug">{j.title}</h3>
             <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{j.description}</p>
             <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-              <span>{j.city} · {j.postedAt}</span>
-              <span className="font-medium text-foreground">{j.budget}</span>
+              <span>{j.city} · {timeAgo(j.created_at)}</span>
+              <span className="font-medium text-foreground">{formatBudget(j.budget_min, j.budget_max)}</span>
             </div>
           </Link>
         ))}
