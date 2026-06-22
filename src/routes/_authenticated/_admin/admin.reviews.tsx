@@ -16,7 +16,7 @@ function AdminReviews() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("reviews")
-        .select("id, rating, comment, created_at, job_id, client_id, pro_id")
+        .select("id, rating, body, created_at, job_id, client_id, pro_id")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data ?? [];
@@ -58,7 +58,7 @@ function AdminReviews() {
                 Verwijderen
               </button>
             </div>
-            <p className="mt-2 text-sm">{r.comment ?? <span className="text-muted-foreground">Geen tekst.</span>}</p>
+            <p className="mt-2 text-sm">{r.body ?? <span className="text-muted-foreground">Geen tekst.</span>}</p>
             <p className="mt-2 text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString("nl-NL")}</p>
           </div>
         ))}
