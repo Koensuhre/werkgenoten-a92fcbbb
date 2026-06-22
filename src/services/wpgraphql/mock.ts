@@ -49,38 +49,7 @@ const theme: ThemeTokens = {
   cards: { radius: "0.75rem", background: "oklch(0.20 0.014 270)", shadow: "0 1px 0 0 oklch(1 0 0 / 0.04) inset" },
 };
 
-const homeBlocks: Block[] = [
-  {
-    __typename: "HeroBlock",
-    id: "home-hero",
-    eyebrow: "Headless CMS demo",
-    title: "Beheer je content vanuit WordPress",
-    subtitle: "Deze pagina is een live demo van het CMS-blockrenderer. Wijzig blocks in WordPress, de frontend volgt zonder deploy.",
-    align: "center",
-    ctas: [
-      { label: "Plaats opdracht", href: "/plaats-opdracht", variant: "primary" },
-      { label: "Bekijk vakmensen", href: "/vakmensen", variant: "secondary" },
-    ],
-  },
-  {
-    __typename: "StatsBlock",
-    id: "home-stats",
-    items: [
-      { value: "184k+", label: "Opdrachten" },
-      { value: "12k+", label: "Vakmensen" },
-      { value: "96k+", label: "Reviews" },
-      { value: "4.8/5", label: "Score" },
-    ],
-  },
-];
-
 const pages: Record<string, CmsPage> = {
-  home: {
-    slug: "home",
-    title: "Vakwerk",
-    seo: { title: "Vakwerk — CMS demo", description: "Headless WordPress + Supabase marketplace." },
-    blocks: homeBlocks,
-  },
   faq: {
     slug: "faq",
     title: "Veelgestelde vragen",
