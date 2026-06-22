@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.grant_admin_if_owner() FROM PUBLIC, anon, authenticated;

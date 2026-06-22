@@ -34,3 +34,8 @@ export function useCurrentUserRoles() {
     },
   });
 }
+
+export function useIsAdmin() {
+  const { data: roles } = useCurrentUserRoles();
+  return (roles ?? []).includes("admin");
+}
