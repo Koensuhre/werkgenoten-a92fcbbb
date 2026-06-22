@@ -18,9 +18,9 @@ const CATEGORY_ICONS: Record<string, string> = {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vakwerk — Vind betrouwbare vakmensen voor elke klus" },
+      { title: "Vakwerk — Vind betrouwbare freelancers voor elke klus" },
       { name: "description", content: "Plaats gratis een opdracht, ontvang offertes van gecontroleerde professionals en kies de beste match." },
-      { property: "og:title", content: "Vakwerk — Vind betrouwbare vakmensen" },
+      { property: "og:title", content: "Vakwerk — Vind betrouwbare freelancers" },
       { property: "og:description", content: "Ontvang offertes van gecontroleerde professionals en kies de beste match." },
       { property: "og:url", content: "/" },
     ],
@@ -62,7 +62,7 @@ function Hero() {
             Nieuw · Direct chat met professionals
           </div>
           <h1 className="animate-fade-up text-balance mt-6 text-5xl font-semibold tracking-tight text-gradient sm:text-6xl md:text-7xl">
-            Vind betrouwbare vakmensen voor elke klus
+            Vind betrouwbare freelancers voor elke klus
           </h1>
           <p className="animate-fade-up mx-auto mt-6 max-w-2xl text-balance text-lg text-muted-foreground">
             Ontvang binnen 24 uur offertes van gecontroleerde professionals in heel Nederland — en kies de beste match.
