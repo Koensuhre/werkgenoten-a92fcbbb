@@ -18,9 +18,9 @@ const CATEGORY_ICONS: Record<string, string> = {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vakwerk — Vind betrouwbare experts voor elke klus" },
+      { title: "Werkgenoten — Vind betrouwbare experts voor elke klus" },
       { name: "description", content: "Plaats gratis een opdracht, ontvang offertes van gecontroleerde professionals en kies de beste match." },
-      { property: "og:title", content: "Vakwerk — Vind betrouwbare freelancers" },
+      { property: "og:title", content: "Werkgenoten — Vind betrouwbare freelancers" },
       { property: "og:description", content: "Ontvang offertes van gecontroleerde professionals en kies de beste match." },
       { property: "og:url", content: "/" },
     ],
