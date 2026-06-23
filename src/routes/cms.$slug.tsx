@@ -7,6 +7,7 @@ export const Route = createFileRoute("/cms/$slug")({
   loader: async ({ context, params }) => {
     const page = await context.queryClient.ensureQueryData(cmsPageQuery(params.slug));
     if (!page) throw notFound();
+    return { page };
   },
   head: ({ loaderData: _loaderData, params }) => ({
     meta: [
@@ -17,7 +18,10 @@ export const Route = createFileRoute("/cms/$slug")({
   errorComponent: ({ error }) => (
     <div className="mx-auto max-w-2xl px-4 py-24 text-center">
       <h1 className="text-2xl font-semibold">Pagina kon niet laden</h1>
-      <p className="mt-2 text-muted-foreground">{error.message}</p>
+      <p className="mt-2 text-sm text-muted-foreground">
+        De WordPress-backend is op dit moment onbereikbaar.
+      </p>
+      <p className="mt-1 text-xs text-muted-foreground">{error.message}</p>
     </div>
   ),
   notFoundComponent: () => (
@@ -28,8 +32,22 @@ export const Route = createFileRoute("/cms/$slug")({
 });
 
 function CmsPage() {
-  const { slug } = Route.useParams();
-  const { data } = useSuspenseQuery(cmsPageQuery(slug));
-  if (!data) return null;
-  return <BlockRenderer blocks={data.blocks} />;
+  const { page } = Route.useLoaderData();
+  // Subscribe so background refetches update the UI, but render from loader
+  // data as the source of truth — prevents flash-then-empty when a refetch
+  // returns null.
+  const { data } = useSuspenseQuery(cmsPageQuery(page.slug));
+  const current = data ?? page;
+  if (!current.blocks?.length) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-24 text-center">
+        <h1 className="text-2xl font-semibold">{current.title}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Deze pagina heeft nog geen content. Voeg blokken toe via{" "}
+          <a href={`/admin/paginas/${current.slug}`} className="underline">/admin/paginas</a>.
+        </p>
+      </div>
+    );
+  }
+  return <BlockRenderer blocks={current.blocks} />;
 }
