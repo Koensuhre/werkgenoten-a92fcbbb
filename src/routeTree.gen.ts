@@ -34,6 +34,7 @@ import { Route as AuthenticatedDashboardInstellingenRouteImport } from './routes
 import { Route as AuthenticatedDashboardBerichtenRouteImport } from './routes/_authenticated/dashboard.berichten'
 import { Route as AuthenticatedDashboardAbonnementRouteImport } from './routes/_authenticated/dashboard.abonnement'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as AuthenticatedAdminAdminThemaRouteImport } from './routes/_authenticated/_admin/admin.thema'
 import { Route as AuthenticatedAdminAdminReviewsRouteImport } from './routes/_authenticated/_admin/admin.reviews'
 import { Route as AuthenticatedAdminAdminReviewProfessionalsRouteImport } from './routes/_authenticated/_admin/admin.review-professionals'
@@ -175,6 +176,12 @@ const AuthenticatedAdminAdminIndexRoute =
     path: '/admin/',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedAdminAdminThemaRoute =
   AuthenticatedAdminAdminThemaRouteImport.update({
     id: '/admin/thema',
@@ -261,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/admin/review-professionals': typeof AuthenticatedAdminAdminReviewProfessionalsRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/admin/paginas/$slug': typeof AuthenticatedAdminAdminPaginasSlugRoute
 }
@@ -292,6 +300,7 @@ export interface FileRoutesByTo {
   '/admin/review-professionals': typeof AuthenticatedAdminAdminReviewProfessionalsRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
   '/admin/paginas/$slug': typeof AuthenticatedAdminAdminPaginasSlugRoute
 }
@@ -329,6 +338,7 @@ export interface FileRoutesById {
   '/_authenticated/_admin/admin/review-professionals': typeof AuthenticatedAdminAdminReviewProfessionalsRoute
   '/_authenticated/_admin/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/_authenticated/_admin/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/_authenticated/_admin/admin/paginas/$slug': typeof AuthenticatedAdminAdminPaginasSlugRoute
 }
@@ -365,6 +375,7 @@ export interface FileRouteTypes {
     | '/admin/review-professionals'
     | '/admin/reviews'
     | '/admin/thema'
+    | '/api/public/payments/webhook'
     | '/admin/'
     | '/admin/paginas/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | '/admin/review-professionals'
     | '/admin/reviews'
     | '/admin/thema'
+    | '/api/public/payments/webhook'
     | '/admin'
     | '/admin/paginas/$slug'
   id:
@@ -432,6 +444,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_admin/admin/review-professionals'
     | '/_authenticated/_admin/admin/reviews'
     | '/_authenticated/_admin/admin/thema'
+    | '/api/public/payments/webhook'
     | '/_authenticated/_admin/admin/'
     | '/_authenticated/_admin/admin/paginas/$slug'
   fileRoutesById: FileRoutesById
@@ -448,6 +461,7 @@ export interface RootRouteChildren {
   VakmensenRoute: typeof VakmensenRouteWithChildren
   WordProfessionalRoute: typeof WordProfessionalRoute
   CmsSlugRoute: typeof CmsSlugRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -626,6 +640,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/_admin/admin/thema': {
       id: '/_authenticated/_admin/admin/thema'
@@ -825,6 +846,7 @@ const rootRouteChildren: RootRouteChildren = {
   VakmensenRoute: VakmensenRouteWithChildren,
   WordProfessionalRoute: WordProfessionalRoute,
   CmsSlugRoute: CmsSlugRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
