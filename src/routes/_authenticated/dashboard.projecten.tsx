@@ -45,34 +45,32 @@ function Projecten() {
             Nog geen projecten. <Link to="/plaats-opdracht" className="text-brand hover:underline">Plaats je eerste opdracht →</Link>
           </div>
         )}
-        {jobs.map((j) => (
-          (() => {
-            const b = statusBadge(j);
-            return (
-              <Link
-                key={j.id}
-                to="/opdrachten/$slug"
-                params={{ slug: j.slug }}
-                className="bg-card-gradient shadow-card block rounded-lg border border-border/60 p-4 hover:border-brand/40"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <div className="font-medium truncate">{j.title}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {j.category?.name ?? "—"} · {j.city ?? ""} · {formatBudget(j.budget_min, j.budget_max)}
-                    </div>
+        {jobs.map((j) => {
+          const b = statusBadge(j);
+          return (
+            <Link
+              key={j.id}
+              to="/opdrachten/$slug"
+              params={{ slug: j.slug }}
+              className="bg-card-gradient shadow-card block rounded-lg border border-border/60 p-4 hover:border-brand/40"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="font-medium truncate">{j.title}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {j.category?.name ?? "—"} · {j.city ?? ""} · {formatBudget(j.budget_min, j.budget_max)}
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-xs whitespace-nowrap ${b.cls}`}>{b.label}</span>
                 </div>
-                {j.review_status === "rejected" && j.review_notes && (
-                  <div className="mt-2 rounded-md bg-destructive/10 p-2 text-xs text-destructive">
-                    Reden: {j.review_notes}
-                  </div>
-                )}
-              </Link>
-            );
-          })()
-        ))}
+                <span className={`rounded-full px-3 py-1 text-xs whitespace-nowrap ${b.cls}`}>{b.label}</span>
+              </div>
+              {j.review_status === "rejected" && j.review_notes && (
+                <div className="mt-2 rounded-md bg-destructive/10 p-2 text-xs text-destructive">
+                  Reden: {j.review_notes}
+                </div>
+              )}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
