@@ -36,6 +36,7 @@ import { Route as AuthenticatedDashboardAbonnementRouteImport } from './routes/_
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
 import { Route as AuthenticatedAdminAdminThemaRouteImport } from './routes/_authenticated/_admin/admin.thema'
 import { Route as AuthenticatedAdminAdminReviewsRouteImport } from './routes/_authenticated/_admin/admin.reviews'
+import { Route as AuthenticatedAdminAdminReviewOpdrachtenRouteImport } from './routes/_authenticated/_admin/admin.review-opdrachten'
 import { Route as AuthenticatedAdminAdminPaginasRouteImport } from './routes/_authenticated/_admin/admin.paginas'
 import { Route as AuthenticatedAdminAdminOpdrachtenRouteImport } from './routes/_authenticated/_admin/admin.opdrachten'
 import { Route as AuthenticatedAdminAdminGebruikersRouteImport } from './routes/_authenticated/_admin/admin.gebruikers'
@@ -185,6 +186,12 @@ const AuthenticatedAdminAdminReviewsRoute =
     path: '/admin/reviews',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminAdminReviewOpdrachtenRoute =
+  AuthenticatedAdminAdminReviewOpdrachtenRouteImport.update({
+    id: '/admin/review-opdrachten',
+    path: '/admin/review-opdrachten',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAdminPaginasRoute =
   AuthenticatedAdminAdminPaginasRouteImport.update({
     id: '/admin/paginas',
@@ -243,6 +250,7 @@ export interface FileRoutesByFullPath {
   '/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
   '/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/admin/paginas': typeof AuthenticatedAdminAdminPaginasRouteWithChildren
+  '/admin/review-opdrachten': typeof AuthenticatedAdminAdminReviewOpdrachtenRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
@@ -272,6 +280,7 @@ export interface FileRoutesByTo {
   '/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
   '/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/admin/paginas': typeof AuthenticatedAdminAdminPaginasRouteWithChildren
+  '/admin/review-opdrachten': typeof AuthenticatedAdminAdminReviewOpdrachtenRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
@@ -307,6 +316,7 @@ export interface FileRoutesById {
   '/_authenticated/_admin/admin/gebruikers': typeof AuthenticatedAdminAdminGebruikersRoute
   '/_authenticated/_admin/admin/opdrachten': typeof AuthenticatedAdminAdminOpdrachtenRoute
   '/_authenticated/_admin/admin/paginas': typeof AuthenticatedAdminAdminPaginasRouteWithChildren
+  '/_authenticated/_admin/admin/review-opdrachten': typeof AuthenticatedAdminAdminReviewOpdrachtenRoute
   '/_authenticated/_admin/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/_authenticated/_admin/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
@@ -341,6 +351,7 @@ export interface FileRouteTypes {
     | '/admin/gebruikers'
     | '/admin/opdrachten'
     | '/admin/paginas'
+    | '/admin/review-opdrachten'
     | '/admin/reviews'
     | '/admin/thema'
     | '/admin/'
@@ -370,6 +381,7 @@ export interface FileRouteTypes {
     | '/admin/gebruikers'
     | '/admin/opdrachten'
     | '/admin/paginas'
+    | '/admin/review-opdrachten'
     | '/admin/reviews'
     | '/admin/thema'
     | '/admin'
@@ -404,6 +416,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_admin/admin/gebruikers'
     | '/_authenticated/_admin/admin/opdrachten'
     | '/_authenticated/_admin/admin/paginas'
+    | '/_authenticated/_admin/admin/review-opdrachten'
     | '/_authenticated/_admin/admin/reviews'
     | '/_authenticated/_admin/admin/thema'
     | '/_authenticated/_admin/admin/'
@@ -615,6 +628,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdminReviewsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/_admin/admin/review-opdrachten': {
+      id: '/_authenticated/_admin/admin/review-opdrachten'
+      path: '/admin/review-opdrachten'
+      fullPath: '/admin/review-opdrachten'
+      preLoaderRoute: typeof AuthenticatedAdminAdminReviewOpdrachtenRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/_admin/admin/paginas': {
       id: '/_authenticated/_admin/admin/paginas'
       path: '/admin/paginas'
@@ -673,6 +693,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAdminGebruikersRoute: typeof AuthenticatedAdminAdminGebruikersRoute
   AuthenticatedAdminAdminOpdrachtenRoute: typeof AuthenticatedAdminAdminOpdrachtenRoute
   AuthenticatedAdminAdminPaginasRoute: typeof AuthenticatedAdminAdminPaginasRouteWithChildren
+  AuthenticatedAdminAdminReviewOpdrachtenRoute: typeof AuthenticatedAdminAdminReviewOpdrachtenRoute
   AuthenticatedAdminAdminReviewsRoute: typeof AuthenticatedAdminAdminReviewsRoute
   AuthenticatedAdminAdminThemaRoute: typeof AuthenticatedAdminAdminThemaRoute
   AuthenticatedAdminAdminIndexRoute: typeof AuthenticatedAdminAdminIndexRoute
@@ -688,6 +709,8 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
       AuthenticatedAdminAdminOpdrachtenRoute,
     AuthenticatedAdminAdminPaginasRoute:
       AuthenticatedAdminAdminPaginasRouteWithChildren,
+    AuthenticatedAdminAdminReviewOpdrachtenRoute:
+      AuthenticatedAdminAdminReviewOpdrachtenRoute,
     AuthenticatedAdminAdminReviewsRoute: AuthenticatedAdminAdminReviewsRoute,
     AuthenticatedAdminAdminThemaRoute: AuthenticatedAdminAdminThemaRoute,
     AuthenticatedAdminAdminIndexRoute: AuthenticatedAdminAdminIndexRoute,
