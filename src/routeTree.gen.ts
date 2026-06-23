@@ -24,6 +24,7 @@ import { Route as OpdrachtenIndexRouteImport } from './routes/opdrachten.index'
 import { Route as VakmensenSlugRouteImport } from './routes/vakmensen.$slug'
 import { Route as OpdrachtenSlugRouteImport } from './routes/opdrachten.$slug'
 import { Route as CmsSlugRouteImport } from './routes/cms.$slug'
+import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/_admin/route'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
@@ -34,6 +35,7 @@ import { Route as AuthenticatedDashboardInstellingenRouteImport } from './routes
 import { Route as AuthenticatedDashboardBerichtenRouteImport } from './routes/_authenticated/dashboard.berichten'
 import { Route as AuthenticatedDashboardAbonnementRouteImport } from './routes/_authenticated/dashboard.abonnement'
 import { Route as AuthenticatedAdminAdminIndexRouteImport } from './routes/_authenticated/_admin/admin.index'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as AuthenticatedAdminAdminThemaRouteImport } from './routes/_authenticated/_admin/admin.thema'
 import { Route as AuthenticatedAdminAdminReviewsRouteImport } from './routes/_authenticated/_admin/admin.reviews'
 import { Route as AuthenticatedAdminAdminReviewProfessionalsRouteImport } from './routes/_authenticated/_admin/admin.review-professionals'
@@ -118,6 +120,11 @@ const CmsSlugRoute = CmsSlugRouteImport.update({
   path: '/cms/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -174,6 +181,12 @@ const AuthenticatedAdminAdminIndexRoute =
     id: '/admin/',
     path: '/admin/',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const AuthenticatedAdminAdminThemaRoute =
   AuthenticatedAdminAdminThemaRouteImport.update({
@@ -241,6 +254,7 @@ export interface FileRoutesByFullPath {
   '/vakmensen': typeof VakmensenRouteWithChildren
   '/word-professional': typeof WordProfessionalRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/checkout/return': typeof CheckoutReturnRoute
   '/cms/$slug': typeof CmsSlugRoute
   '/opdrachten/$slug': typeof OpdrachtenSlugRoute
   '/vakmensen/$slug': typeof VakmensenSlugRoute
@@ -261,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/admin/review-professionals': typeof AuthenticatedAdminAdminReviewProfessionalsRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/admin/paginas/$slug': typeof AuthenticatedAdminAdminPaginasSlugRoute
 }
@@ -272,6 +287,7 @@ export interface FileRoutesByTo {
   '/plaats-opdracht': typeof PlaatsOpdrachtRoute
   '/prijzen': typeof PrijzenRoute
   '/word-professional': typeof WordProfessionalRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/cms/$slug': typeof CmsSlugRoute
   '/opdrachten/$slug': typeof OpdrachtenSlugRoute
   '/vakmensen/$slug': typeof VakmensenSlugRoute
@@ -292,6 +308,7 @@ export interface FileRoutesByTo {
   '/admin/review-professionals': typeof AuthenticatedAdminAdminReviewProfessionalsRoute
   '/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/admin': typeof AuthenticatedAdminAdminIndexRoute
   '/admin/paginas/$slug': typeof AuthenticatedAdminAdminPaginasSlugRoute
 }
@@ -309,6 +326,7 @@ export interface FileRoutesById {
   '/word-professional': typeof WordProfessionalRoute
   '/_authenticated/_admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/checkout/return': typeof CheckoutReturnRoute
   '/cms/$slug': typeof CmsSlugRoute
   '/opdrachten/$slug': typeof OpdrachtenSlugRoute
   '/vakmensen/$slug': typeof VakmensenSlugRoute
@@ -329,6 +347,7 @@ export interface FileRoutesById {
   '/_authenticated/_admin/admin/review-professionals': typeof AuthenticatedAdminAdminReviewProfessionalsRoute
   '/_authenticated/_admin/admin/reviews': typeof AuthenticatedAdminAdminReviewsRoute
   '/_authenticated/_admin/admin/thema': typeof AuthenticatedAdminAdminThemaRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/_authenticated/_admin/admin/': typeof AuthenticatedAdminAdminIndexRoute
   '/_authenticated/_admin/admin/paginas/$slug': typeof AuthenticatedAdminAdminPaginasSlugRoute
 }
@@ -345,6 +364,7 @@ export interface FileRouteTypes {
     | '/vakmensen'
     | '/word-professional'
     | '/dashboard'
+    | '/checkout/return'
     | '/cms/$slug'
     | '/opdrachten/$slug'
     | '/vakmensen/$slug'
@@ -365,6 +385,7 @@ export interface FileRouteTypes {
     | '/admin/review-professionals'
     | '/admin/reviews'
     | '/admin/thema'
+    | '/api/public/payments/webhook'
     | '/admin/'
     | '/admin/paginas/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -376,6 +397,7 @@ export interface FileRouteTypes {
     | '/plaats-opdracht'
     | '/prijzen'
     | '/word-professional'
+    | '/checkout/return'
     | '/cms/$slug'
     | '/opdrachten/$slug'
     | '/vakmensen/$slug'
@@ -396,6 +418,7 @@ export interface FileRouteTypes {
     | '/admin/review-professionals'
     | '/admin/reviews'
     | '/admin/thema'
+    | '/api/public/payments/webhook'
     | '/admin'
     | '/admin/paginas/$slug'
   id:
@@ -412,6 +435,7 @@ export interface FileRouteTypes {
     | '/word-professional'
     | '/_authenticated/_admin'
     | '/_authenticated/dashboard'
+    | '/checkout/return'
     | '/cms/$slug'
     | '/opdrachten/$slug'
     | '/vakmensen/$slug'
@@ -432,6 +456,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_admin/admin/review-professionals'
     | '/_authenticated/_admin/admin/reviews'
     | '/_authenticated/_admin/admin/thema'
+    | '/api/public/payments/webhook'
     | '/_authenticated/_admin/admin/'
     | '/_authenticated/_admin/admin/paginas/$slug'
   fileRoutesById: FileRoutesById
@@ -447,7 +472,9 @@ export interface RootRouteChildren {
   PrijzenRoute: typeof PrijzenRoute
   VakmensenRoute: typeof VakmensenRouteWithChildren
   WordProfessionalRoute: typeof WordProfessionalRoute
+  CheckoutReturnRoute: typeof CheckoutReturnRoute
   CmsSlugRoute: typeof CmsSlugRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -557,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/return': {
+      id: '/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof CheckoutReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -626,6 +660,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/_admin/admin/thema': {
       id: '/_authenticated/_admin/admin/thema'
@@ -824,7 +865,9 @@ const rootRouteChildren: RootRouteChildren = {
   PrijzenRoute: PrijzenRoute,
   VakmensenRoute: VakmensenRouteWithChildren,
   WordProfessionalRoute: WordProfessionalRoute,
+  CheckoutReturnRoute: CheckoutReturnRoute,
   CmsSlugRoute: CmsSlugRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

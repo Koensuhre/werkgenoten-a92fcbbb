@@ -82,6 +82,7 @@ export const plans = [
   {
     name: "Starter",
     price: 19,
+    priceId: "starter_monthly",
     tagline: "Voor zzp'ers die net beginnen",
     features: ["10 leads per maand", "Basis bedrijfsprofiel", "Reviews verzamelen", "E-mail support"],
     cta: "Start met Starter",
@@ -90,6 +91,7 @@ export const plans = [
   {
     name: "Professional",
     price: 49,
+    priceId: "professional_monthly",
     tagline: "Meest gekozen door groeiende bedrijven",
     features: ["Onbeperkte leads", "Uitgelicht profiel in zoekresultaten", "Inzicht in statistieken", "Prioriteit support", "Verificatie-badge"],
     cta: "Kies Professional",
@@ -98,6 +100,7 @@ export const plans = [
   {
     name: "Business",
     price: 99,
+    priceId: "business_monthly",
     tagline: "Voor teams en specialisten",
     features: ["Alles uit Professional", "Tot 5 team-accounts", "Top-positie in jouw regio", "Geavanceerde analytics", "Persoonlijke accountmanager"],
     cta: "Praat met sales",
