@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Save, RotateCcw, Eraser } from "lucide-react";
+import { Save, RotateCcw, Eraser, DownloadCloud } from "lucide-react";
+import { cmsClient } from "@/services/wpgraphql";
 import { cmsThemeQuery } from "@/services/wpgraphql";
 import {
   themeOverrideQuery,
@@ -90,6 +91,7 @@ function ThemeAdmin() {
 
   const [draft, setDraft] = useState<ThemeTokens | null>(null);
   const [saving, setSaving] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
     if (initial && !draft) setDraft(initial);
@@ -154,6 +156,26 @@ function ThemeAdmin() {
     }
   };
 
+  const onSyncFromWp = async () => {
+    setSyncing(true);
+    try {
+      const fresh = await cmsClient.getTheme();
+      if (!fresh) {
+        toast.error("WordPress leverde geen themeSettings terug.");
+        return;
+      }
+      await qc.invalidateQueries({ queryKey: ["cms", "theme"] });
+      const next = clone(fresh);
+      setDraft(next);
+      applyTheme(next);
+      toast.success("Baseline opgehaald uit WordPress — controleer en klik Opslaan om live te zetten.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Synchroniseren mislukt");
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-4">
@@ -165,6 +187,14 @@ function ThemeAdmin() {
           </p>
         </div>
         <div className="flex gap-2">
+          <button
+            onClick={onSyncFromWp}
+            disabled={syncing}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-secondary px-3 py-2 text-sm disabled:opacity-50"
+            title="Haal de huidige themeSettings uit WordPress op als nieuw concept"
+          >
+            <DownloadCloud className="h-4 w-4" /> {syncing ? "Synchroniseren…" : "Sync uit WordPress"}
+          </button>
           <button
             onClick={onReset}
             className="inline-flex items-center gap-2 rounded-md border border-border bg-secondary px-3 py-2 text-sm"
