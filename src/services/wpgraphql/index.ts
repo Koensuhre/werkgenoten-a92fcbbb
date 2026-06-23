@@ -1,5 +1,5 @@
 export { cmsClient, cmsUsesMock } from "./client";
-export type { CmsClient } from "./client";
+export type { CmsClient, CmsPageSummary } from "./client";
 
 import { queryOptions } from "@tanstack/react-query";
 import { cmsClient } from "./client";
@@ -30,4 +30,11 @@ export const cmsFooterQuery = () =>
     queryKey: ["cms", "footer"],
     queryFn: () => cmsClient.getFooter(),
     staleTime: 5 * 60_000,
+  });
+
+export const cmsPagesListQuery = () =>
+  queryOptions({
+    queryKey: ["cms", "pages"],
+    queryFn: () => cmsClient.listPages(),
+    staleTime: 30_000,
   });

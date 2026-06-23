@@ -109,4 +109,13 @@ export const mockProvider: CmsClient = {
   async getFooter() {
     return footer;
   },
+  async listPages() {
+    return Object.values(pages).map((p, i) => ({
+      id: i + 1,
+      slug: p.slug,
+      uri: `/${p.slug}/`,
+      title: p.title,
+      modified: new Date().toISOString(),
+    }));
+  },
 };

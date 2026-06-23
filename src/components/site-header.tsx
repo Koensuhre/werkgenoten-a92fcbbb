@@ -1,12 +1,14 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, LayoutDashboard, LogOut, Shield } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { useSession } from "@/hooks/use-session";
 import { useIsAdmin } from "@/hooks/use-current-profile";
 import { supabase } from "@/integrations/supabase/client";
+import { cmsMenuQuery } from "@/services/wpgraphql";
 
-const nav = [
+const fallbackNav = [
   { to: "/opdrachten", label: "Opdrachten" },
   { to: "/vakmensen", label: "Vakmensen" },
   { to: "/hoe-werkt-het", label: "Hoe het werkt" },
@@ -18,6 +20,10 @@ export function SiteHeader() {
   const { user, loading } = useSession();
   const isAdmin = useIsAdmin();
   const navigate = useNavigate();
+  const { data: wpMenu } = useQuery(cmsMenuQuery("PRIMARY"));
+  const nav = wpMenu?.items?.length
+    ? wpMenu.items.map((m) => ({ to: m.href, label: m.label }))
+    : fallbackNav;
 
   async function handleSignOut() {
     await supabase.auth.signOut();
@@ -36,14 +42,13 @@ export function SiteHeader() {
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((n) => (
-              <Link
-                key={n.to}
-                to={n.to}
+              <a
+                key={n.to + n.label}
+                href={n.to}
                 className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                activeProps={{ className: "text-foreground" }}
               >
                 {n.label}
-              </Link>
+              </a>
             ))}
           </nav>
           <div className="hidden items-center gap-2 md:flex">
@@ -93,9 +98,9 @@ export function SiteHeader() {
         <div className={cn("md:hidden", open ? "block" : "hidden")}>
           <div className="border-t border-border/60 px-4 py-3">
             {nav.map((n) => (
-              <Link key={n.to} to={n.to} className="block rounded-md px-3 py-2 text-sm" onClick={() => setOpen(false)}>
+              <a key={n.to + n.label} href={n.to} className="block rounded-md px-3 py-2 text-sm" onClick={() => setOpen(false)}>
                 {n.label}
-              </Link>
+              </a>
             ))}
             <div className="mt-2 flex gap-2">
               {user ? (

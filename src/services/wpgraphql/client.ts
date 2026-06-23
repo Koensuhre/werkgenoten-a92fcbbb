@@ -17,37 +17,41 @@ const client = endpoint
 
 export const cmsUsesMock = !client;
 
+export type CmsPageSummary = {
+  id: number;
+  slug: string;
+  uri: string;
+  title: string;
+  modified: string;
+};
+
 export type CmsClient = {
   getPage: (slug: string) => Promise<CmsPage | null>;
   getTheme: () => Promise<ThemeTokens | null>;
   getMenu: (location: string) => Promise<CmsMenu | null>;
   getFooter: () => Promise<CmsFooter | null>;
+  listPages: () => Promise<CmsPageSummary[]>;
 };
 
 export const cmsClient: CmsClient = client
   ? {
       async getPage(slug) {
         // Standard WPGraphQL `page(id, idType:URI)`. `blocksJson` is a custom
-        // field added by the Vakwerk snippet; `seo` requires Yoast/RankMath
-        // plus the matching WPGraphQL add-on, so we don't request it here to
-        // avoid hard schema errors on minimal installs.
-        try {
-          const data = await client.request<{
-            page: { slug: string; title: string; blocksJson?: string | null } | null;
-          }>(
-            /* GraphQL */ `query($slug:ID!){ page(id:$slug, idType:URI){ slug title blocksJson } }`,
-            { slug },
-          );
-          if (!data.page) return null;
-          let blocks: Block[] = [];
-          if (data.page.blocksJson) {
-            try { blocks = JSON.parse(data.page.blocksJson); } catch { blocks = []; }
-          }
-          return { slug: data.page.slug, title: data.page.title, seo: {}, blocks };
-        } catch (err) {
-          if (import.meta.env.DEV) console.warn("[cms] getPage failed", err);
-          return null;
+        // field added by the Vakwerk snippet. Network/GraphQL errors bubble up
+        // so the route's errorComponent can show "WP onbereikbaar" instead of
+        // a silently empty page. Only a missing page returns null (-> 404).
+        const data = await client.request<{
+          page: { slug: string; title: string; blocksJson?: string | null } | null;
+        }>(
+          /* GraphQL */ `query($slug:ID!){ page(id:$slug, idType:URI){ slug title blocksJson } }`,
+          { slug },
+        );
+        if (!data.page) return null;
+        let blocks: Block[] = [];
+        if (data.page.blocksJson) {
+          try { blocks = JSON.parse(data.page.blocksJson); } catch { blocks = []; }
         }
+        return { slug: data.page.slug, title: data.page.title, seo: {}, blocks };
       },
       async getTheme() {
         try {
@@ -119,6 +123,25 @@ export const cmsClient: CmsClient = client
         } catch (err) {
           if (import.meta.env.DEV) console.warn("[cms] getFooter failed", err);
           return null;
+        }
+      },
+      async listPages() {
+        try {
+          const data = await client.request<{
+            pages: { nodes: Array<{ databaseId: number; slug: string; uri: string; title: string; modified: string }> };
+          }>(
+            /* GraphQL */ `query{ pages(first:100){ nodes{ databaseId slug uri title modified } } }`,
+          );
+          return data.pages.nodes.map((n) => ({
+            id: n.databaseId,
+            slug: n.slug,
+            uri: n.uri,
+            title: n.title,
+            modified: n.modified,
+          }));
+        } catch (err) {
+          if (import.meta.env.DEV) console.warn("[cms] listPages failed", err);
+          return [];
         }
       },
     }
