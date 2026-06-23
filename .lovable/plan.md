@@ -1,42 +1,66 @@
 ## Doel
-De Vakwerk-frontend laten lezen uit jouw tijdelijke WordPress op `https://xenodochial-mclean.45-82-188-50.plesk.page` via WPGraphQL, zodat pagina's, menu's, theme-tokens en footer vanuit WordPress komen in plaats van de mock-data.
+Fase 1 met simpele block-editor: WordPress wordt de bron voor **content-pagina's** (contact, over-ons, faq, etc.) en het hoofdmenu. App-routes (`/dashboard`, `/opdrachten`, `/plaats-opdracht`, `/admin`, `/auth`) blijven hardcoded React-routes. Admins beheren WP-pagina's vanaf `/admin/paginas` met een blokken-formulier en live preview, en kunnen vanuit daar doorklikken naar Gutenberg voor rich editing.
 
-## Vereiste actie aan jouw kant (WordPress)
-De site heeft nu géén actieve GraphQL-/REST-laag. Voordat de koppeling werkt moet je in WP-admin het volgende doen:
+## Wat ik ga bouwen
 
-1. **Plugin installeren & activeren**: `WPGraphQL` (gratis, via Plugins → Nieuwe toevoegen).
-2. Aanbevolen extra plugins (alleen nodig als je ACF/Gutenberg-blokken via GraphQL wilt blootleggen):
-   - `WPGraphQL for ACF` (alleen als je ACF gebruikt)
-   - `WPGraphQL Smart Cache` (optioneel, voor performance)
-3. **Permalinks** op iets anders dan "Plain" zetten (Instellingen → Permalinks → bv. "Berichtnaam" → Opslaan). Anders blijft `/graphql` 404 geven.
-4. Controleer daarna in je browser:
-   `https://xenodochial-mclean.45-82-188-50.plesk.page/graphql?query={__typename}` → moet JSON teruggeven, geen HTML/404.
+### 1. Bugfix: `/cms/contact` flashed dan leeg
+- `src/routes/cms.$slug.tsx`: render content uit `useSuspenseQuery` blijft, maar:
+  - Loader gooit `notFound()` als WP `null` teruggeeft (nu doet hij dat al, maar de catch in `getPage` slikt errors waardoor cache `null` wordt → leeg).
+  - Onderscheid maken tussen "pagina bestaat niet" (404) en "WP onbereikbaar" (errorComponent met retry). De huidige `try/catch → null` maakt beide gevallen identiek; ik vervang door doorgooien van netwerk-/GraphQL-errors en alleen `null` bij echt 404.
+- `BlockRenderer` defensief maken tegen lege `blocks`-array.
 
-Laat me weten wanneer dit klaar is — dan kan ik de koppeling daadwerkelijk activeren.
+### 2. `/admin/paginas` — WP-pagina-overzicht
+Nieuwe route `src/routes/_authenticated/_admin/admin.paginas.tsx`:
+- Lijst van alle WP-pagina's via nieuwe `cmsClient.listPages()` (WPGraphQL `pages { nodes { slug title modified uri } }`).
+- Per rij: titel, slug, "laatst gewijzigd", knoppen "Bewerken" (→ `/admin/paginas/$slug`) en "Open in WP" (→ `wp-admin/post.php?post=ID&action=edit` in nieuw tabblad).
+- Knop "Nieuwe pagina" → opent dialog met titel + slug → POST naar WP REST (`/wp-json/wp/v2/pages`) met Application Password (zie sectie 5).
 
-## Wat ik daarna doe in de code
+### 3. `/admin/paginas/$slug` — simpele block-editor
+Nieuwe route `src/routes/_authenticated/_admin/admin.paginas.$slug.tsx`:
+- Laadt pagina via `cmsClient.getPage(slug)`.
+- Linkerkant: lijst van blokken (hero/richtext/features/cta/faq/image/...), met per blok:
+  - Drag-handle om volgorde te wijzigen (`@dnd-kit/sortable` — al niet aanwezig, wel `cmdk` etc.; installeer `@dnd-kit/core @dnd-kit/sortable`).
+  - Verwijder, dupliceer.
+  - Veld-formulier op basis van block-type (Zod-schema per block-type → React Hook Form).
+- "Blok toevoegen" knop → picker met blok-types.
+- Rechterkant: live preview via bestaande `BlockRenderer` op de huidige draft.
+- "Opslaan" → POST `blocksJson` naar WP REST custom endpoint (sectie 5).
+- "Open in Gutenberg" knop voor wie liever de WP-editor gebruikt.
 
-1. **Endpoint configureren** in `.env`:
-   ```
-   VITE_WP_GRAPHQL_URL=https://xenodochial-mclean.45-82-188-50.plesk.page/graphql
-   ```
-   De bestaande client in `src/services/wpgraphql/client.ts` schakelt automatisch over van mock naar de echte WordPress zodra deze variabele gezet is — geen verdere codewijziging nodig.
+### 4. WP-menu sync in `site-header`
+- `cmsClient.getMenu("PRIMARY")` bestaat al; nieuwe hook `useCmsMenu()` met fallback naar de hardcoded `nav` array bij `null`.
+- `site-header.tsx` rendert WP-menu als beschikbaar, anders huidige hardcoded items.
+- App-routes (Plaats opdracht, Dashboard, Admin) blijven los — die zitten niet in het WP-menu.
 
-2. **Verbinding testen** vanaf de server: een korte GraphQL-call (`{__schema{queryType{name}}}`) om te bevestigen dat WPGraphQL antwoordt en CORS goed staat.
+### 5. WordPress-kant (door jou uit te voeren in WP)
+Ik kan dit niet voor je deployen — jij moet in WP:
+- **Application Password** aanmaken voor je admin-user (Users → Profile → Application Passwords) en als secret `WP_APP_PASSWORD` + `WP_APP_USER` opslaan via de Cloud-secrets-knop.
+- Snippet (lever ik aan) in `functions.php` / mu-plugin die:
+  - `blocksJson` registreert als REST-/GraphQL-veld op `page` (read+write).
+  - Optioneel: een `vakwerk/v1/pages/:slug` endpoint dat blocksJson in één POST update.
+- CORS toestaan voor de Lovable preview/published origin.
 
-3. **Schema-afstemming controleren**. De frontend verwacht een schema met o.a.:
-   - `page(slug: String!) { slug title seo{...} blocksJson }`
-   - `themeSettings { tokensJson }`
-   - `menu(location: String!) { ... }`
-   - `footer { ... }`
-   
-   Vanilla WPGraphQL levert dit **niet** standaard — `blocksJson`, `themeSettings` en `footer` zijn custom velden die op WP-zijde toegevoegd moeten worden (via een klein plugin-bestand of een snippet in `functions.php`). Als die er nog niet zijn, val ik per query terug op een veilige `null` zodat de site niet breekt, en lever ik je de PHP-snippet aan die je in WordPress moet plaatsen.
+De frontend-code roept WP aan via een **server function** `updatePage.functions.ts` met `requireSupabaseAuth + admin-role check`, die met de Application Password naar WP REST schrijft. Geen WP-credentials in de browser.
 
-4. **CORS**: indien de browser blokkeert op CORS, voeg ik de instructie toe om in WordPress (via plugin of `.htaccess`) `Access-Control-Allow-Origin` toe te staan voor je Lovable preview/published URL.
+### 6. Documentatie
+Update `.lovable/plan.md` met:
+- Lijst app-routes (niet WP-beheerd).
+- Lijst content-routes (WP-beheerd via `/cms/$slug`).
+- Korte instructie voor admins: "WP-pagina maken via `/admin/paginas` of WP-admin".
 
-## Buiten scope (nu nog niet)
-- Authenticated previews / JWT-token (`VITE_WP_GRAPHQL_TOKEN`) — alleen nodig als je niet-gepubliceerde concepten wil zien.
-- Migratie van bestaande hardcoded routes (`/`, `/prijzen`, etc.) naar volledig CMS-gestuurd. Eerst koppelen, daarna kunnen we per pagina beslissen of WP de bron wordt.
+## Wat ik **niet** doe in deze fase
+- Drag-and-drop op een visueel canvas (Elementor-stijl). De editor is een formulier met live preview, niet een WYSIWYG-canvas. Dit is bewuste scope.
+- Inline editen op de live site (frontend overlay-editor).
+- Bidirectionele realtime sync — WP is de bron; wijzigingen via de frontend gaan via REST naar WP, wijzigingen in WP zijn meteen zichtbaar (cache `staleTime: 60s`).
+- Migratie van bestaande hardcoded marketing-content (`/prijzen`, `/hoe-werkt-het`) naar WP. Doen we per pagina als jij dat wilt.
 
-## Vraag
-Wil je dat ik nu alvast stap 1 (endpoint in `.env`) doe zodat de schakelaar omgaat zodra jij WPGraphQL hebt geïnstalleerd? Of wachten we tot WordPress klaar is en doen we het in één keer met test erbij?
+## Volgorde van uitvoering
+1. Bugfix `/cms/contact` + `BlockRenderer` defensief.
+2. `cmsClient.listPages()` + `updatePage` server function.
+3. `/admin/paginas` overzicht.
+4. `/admin/paginas/$slug` block-editor met dnd-kit.
+5. `useCmsMenu()` + `site-header` integratie.
+6. Plan-doc bijwerken + WP-snippet aanleveren in chat.
+
+## Vraag voordat ik begin
+Heb je al een **WordPress Application Password** aangemaakt en wil je die nu als secret `WP_APP_USER` + `WP_APP_PASSWORD` opslaan? Zonder die credentials kan de "opslaan naar WP" knop niet werken — dan bouw ik de editor wel maar laat opslaan disabled met een duidelijke melding totdat jij de secret toevoegt.
