@@ -82,6 +82,10 @@ export type Database = {
           description: string
           id: string
           postal_code: string | null
+          review_notes: string | null
+          review_status: string
+          reviewed_at: string | null
+          reviewed_by: string | null
           slug: string
           status: Database["public"]["Enums"]["job_status"]
           title: string
@@ -99,6 +103,10 @@ export type Database = {
           description: string
           id?: string
           postal_code?: string | null
+          review_notes?: string | null
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug: string
           status?: Database["public"]["Enums"]["job_status"]
           title: string
@@ -116,6 +124,10 @@ export type Database = {
           description?: string
           id?: string
           postal_code?: string | null
+          review_notes?: string | null
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["job_status"]
           title?: string
@@ -217,6 +229,10 @@ export type Database = {
           rating_avg: number | null
           response_time: string | null
           review_count: number
+          review_notes: string | null
+          review_status: string
+          reviewed_at: string | null
+          reviewed_by: string | null
           slug: string | null
           updated_at: string
           verified: boolean
@@ -235,6 +251,10 @@ export type Database = {
           rating_avg?: number | null
           response_time?: string | null
           review_count?: number
+          review_notes?: string | null
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug?: string | null
           updated_at?: string
           verified?: boolean
@@ -253,6 +273,10 @@ export type Database = {
           rating_avg?: number | null
           response_time?: string | null
           review_count?: number
+          review_notes?: string | null
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug?: string | null
           updated_at?: string
           verified?: boolean
