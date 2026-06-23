@@ -7,8 +7,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Inloggen — Vakwerk" },
-      { name: "description", content: "Log in of maak een account aan bij Vakwerk." },
+      { title: "Inloggen — Werkgenoten" },
+      { name: "description", content: "Log in of maak een account aan bij Werkgenoten." },
     ],
   }),
   component: AuthPage,
@@ -59,7 +59,7 @@ function AuthPage() {
           {mode === "signin" ? "Welkom terug" : "Maak een account"}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {mode === "signin" ? "Log in op je Vakwerk-account." : "Begin gratis op Vakwerk."}
+          {mode === "signin" ? "Log in op je Werkgenoten-account." : "Begin gratis op Werkgenoten."}
         </p>
 
         <button

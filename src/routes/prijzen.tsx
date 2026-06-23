@@ -5,9 +5,9 @@ import { plans } from "@/lib/mock-data";
 export const Route = createFileRoute("/prijzen")({
   head: () => ({
     meta: [
-      { title: "Prijzen — Vakwerk" },
-      { name: "description", content: "Heldere abonnementen voor professionals. Opdrachtgevers gebruiken Vakwerk gratis." },
-      { property: "og:title", content: "Prijzen — Vakwerk" },
+      { title: "Prijzen — Werkgenoten" },
+      { name: "description", content: "Heldere abonnementen voor professionals. Opdrachtgevers gebruiken Werkgenoten gratis." },
+      { property: "og:title", content: "Prijzen — Werkgenoten" },
       { property: "og:description", content: "Abonnementen voor professionals." },
       { property: "og:url", content: "/prijzen" },
     ],

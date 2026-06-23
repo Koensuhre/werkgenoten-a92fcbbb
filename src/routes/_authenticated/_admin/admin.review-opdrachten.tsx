@@ -129,7 +129,7 @@ function ReviewJobs() {
                     <div>
                       E-mail:{" "}
                       {contactData.email ? (
-                        <a className="text-brand hover:underline" href={`mailto:${contactData.email}?subject=Je opdracht op Vakwerk: ${encodeURIComponent(j.title)}`}>
+                        <a className="text-brand hover:underline" href={`mailto:${contactData.email}?subject=Je opdracht op Werkgenoten: ${encodeURIComponent(j.title)}`}>
                           {contactData.email}
                         </a>
                       ) : "—"}

@@ -7,7 +7,7 @@ import { useSession } from "@/hooks/use-session";
 export const Route = createFileRoute("/_authenticated/_admin")({
   head: () => ({
     meta: [
-      { title: "Admin — Vakwerk" },
+      { title: "Admin — Werkgenoten" },
       { name: "robots", content: "noindex" },
     ],
   }),

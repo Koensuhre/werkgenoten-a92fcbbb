@@ -53,14 +53,14 @@ const pages: Record<string, CmsPage> = {
   faq: {
     slug: "faq",
     title: "Veelgestelde vragen",
-    seo: { title: "FAQ — Vakwerk", description: "Antwoorden op veelgestelde vragen." },
+    seo: { title: "FAQ — Werkgenoten", description: "Antwoorden op veelgestelde vragen." },
     blocks: [
       {
         __typename: "FaqBlock",
         id: "faq-main",
         title: "Veelgestelde vragen",
         items: [
-          { question: "Hoe werkt Vakwerk?", answer: "Plaats een opdracht, ontvang offertes van geverifieerde vakmensen en kies de beste." },
+          { question: "Hoe werkt Werkgenoten?", answer: "Plaats een opdracht, ontvang offertes van geverifieerde vakmensen en kies de beste." },
           { question: "Wat kost het?", answer: "Een opdracht plaatsen is gratis. Vakmensen betalen een abonnement." },
           { question: "Hoe controleren jullie vakmensen?", answer: "Wij verifiëren KvK, verzekering en reviews." },
         ],
@@ -70,7 +70,7 @@ const pages: Record<string, CmsPage> = {
   voorwaarden: {
     slug: "voorwaarden",
     title: "Algemene voorwaarden",
-    seo: { title: "Voorwaarden — Vakwerk" },
+    seo: { title: "Voorwaarden — Werkgenoten" },
     blocks: [
       { __typename: "RichTextBlock", id: "tos", html: "<h1>Algemene voorwaarden</h1><p>Beheer de inhoud van deze pagina vanuit WordPress.</p>" },
     ],
@@ -93,7 +93,7 @@ const footer: CmsFooter = {
     { title: "Bedrijf", links: [{ label: "Over ons", href: "/over-ons" }, { label: "Blog", href: "/blog" }] },
     { title: "Juridisch", links: [{ label: "Voorwaarden", href: "/cms/voorwaarden" }, { label: "Privacy", href: "/cms/privacy" }] },
   ],
-  copyright: `© ${new Date().getFullYear()} Vakwerk`,
+  copyright: `© ${new Date().getFullYear()} Werkgenoten`,
 };
 
 export const mockProvider: CmsClient = {

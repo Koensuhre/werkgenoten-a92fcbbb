@@ -6,9 +6,9 @@ import { useJobs, useCategories, formatBudget, timeAgo } from "@/lib/queries";
 export const Route = createFileRoute("/opdrachten")({
   head: () => ({
     meta: [
-      { title: "Opdrachten — Vakwerk" },
+      { title: "Opdrachten — Werkgenoten" },
       { name: "description", content: "Bekijk actuele klussen in heel Nederland en stuur jouw offerte." },
-      { property: "og:title", content: "Opdrachten — Vakwerk" },
+      { property: "og:title", content: "Opdrachten — Werkgenoten" },
       { property: "og:description", content: "Bekijk actuele klussen en stuur een offerte." },
       { property: "og:url", content: "/opdrachten" },
     ],

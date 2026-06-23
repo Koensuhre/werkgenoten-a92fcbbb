@@ -11,9 +11,9 @@ import { useQueryClient } from "@tanstack/react-query";
 export const Route = createFileRoute("/word-professional")({
   head: () => ({
     meta: [
-      { title: "Word professional — Vakwerk" },
-      { name: "description", content: "Groei je bedrijf met leads van Vakwerk." },
-      { property: "og:title", content: "Word professional — Vakwerk" },
+      { title: "Word professional — Werkgenoten" },
+      { name: "description", content: "Groei je bedrijf met leads van Werkgenoten." },
+      { property: "og:title", content: "Word professional — Werkgenoten" },
       { property: "og:url", content: "/word-professional" },
     ],
     links: [{ rel: "canonical", href: "/word-professional" }],
@@ -82,7 +82,7 @@ function BecomePro() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
       <div className="text-center">
-        <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">Groei jouw bedrijf met Vakwerk</h1>
+        <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">Groei jouw bedrijf met Werkgenoten</h1>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Krijg direct leads in jouw regio, bouw aan reviews en laat marketing aan ons over.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link to="/prijzen" className="rounded-lg bg-brand-gradient px-6 py-3 text-sm font-medium text-brand-foreground shadow-glow">Bekijk abonnementen</Link>
@@ -92,7 +92,7 @@ function BecomePro() {
 
       <div className="mt-16 grid gap-4 md:grid-cols-3">
         {[
-          { icon: <TrendingUp className="h-5 w-5" />, t: "60% nieuwe omzet", d: "Gemiddeld percentage nieuwe klanten dat onze pro's via Vakwerk haalt." },
+          { icon: <TrendingUp className="h-5 w-5" />, t: "60% nieuwe omzet", d: "Gemiddeld percentage nieuwe klanten dat onze pro's via Werkgenoten haalt." },
           { icon: <Users className="h-5 w-5" />, t: "12.480+ collega's", d: "Sluit je aan bij de grootste community van vakmensen in Nederland." },
           { icon: <Star className="h-5 w-5" />, t: "Reviews die converteren", d: "Authentieke beoordelingen na elke afgeronde klus." },
         ].map((b) => (

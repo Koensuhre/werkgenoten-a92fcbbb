@@ -4,7 +4,7 @@ import { LayoutDashboard, Briefcase, MessageCircle, Star, Settings, CreditCard, 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — Vakwerk" },
+      { title: "Dashboard — Werkgenoten" },
       { name: "robots", content: "noindex" },
     ],
   }),

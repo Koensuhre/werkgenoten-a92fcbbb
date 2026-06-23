@@ -130,7 +130,7 @@ function ReviewPros() {
                     <div>
                       E-mail:{" "}
                       {contactData.email ? (
-                        <a className="text-brand hover:underline" href={`mailto:${contactData.email}?subject=Je aanmelding op Vakwerk`}>
+                        <a className="text-brand hover:underline" href={`mailto:${contactData.email}?subject=Je aanmelding op Werkgenoten`}>
                           {contactData.email}
                         </a>
                       ) : "—"}

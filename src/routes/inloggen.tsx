@@ -3,9 +3,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/inloggen")({
   head: () => ({
     meta: [
-      { title: "Inloggen — Vakwerk" },
-      { name: "description", content: "Log in op jouw Vakwerk-account." },
-      { property: "og:title", content: "Inloggen — Vakwerk" },
+      { title: "Inloggen — Werkgenoten" },
+      { name: "description", content: "Log in op jouw Werkgenoten-account." },
+      { property: "og:title", content: "Inloggen — Werkgenoten" },
       { property: "og:url", content: "/inloggen" },
     ],
     links: [{ rel: "canonical", href: "/inloggen" }],
@@ -18,7 +18,7 @@ function Login() {
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16 sm:px-6">
       <div className="bg-card-gradient shadow-elegant rounded-2xl border border-border/60 p-8">
         <h1 className="text-2xl font-semibold tracking-tight">Welkom terug</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Log in op je Vakwerk-account.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Log in op je Werkgenoten-account.</p>
         <form className="mt-6 space-y-4">
           <div>
             <label htmlFor="email" className="mb-1.5 block text-sm font-medium">E-mail</label>

@@ -36,9 +36,9 @@ export function SiteHeader() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-2 font-semibold tracking-tight">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-brand-foreground shadow-glow">
-              <span className="text-sm font-bold">V</span>
+              <span className="text-sm font-bold">W</span>
             </span>
-            <span className="text-base">Vakwerk</span>
+            <span className="text-base">Werkgenoten</span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map((n) => (

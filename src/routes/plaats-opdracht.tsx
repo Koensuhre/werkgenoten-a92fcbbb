@@ -9,9 +9,9 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/plaats-opdracht")({
   head: () => ({
     meta: [
-      { title: "Plaats opdracht — Vakwerk" },
+      { title: "Plaats opdracht — Werkgenoten" },
       { name: "description", content: "Plaats gratis een opdracht en ontvang binnen 24 uur offertes." },
-      { property: "og:title", content: "Plaats opdracht — Vakwerk" },
+      { property: "og:title", content: "Plaats opdracht — Werkgenoten" },
       { property: "og:url", content: "/plaats-opdracht" },
     ],
     links: [{ rel: "canonical", href: "/plaats-opdracht" }],

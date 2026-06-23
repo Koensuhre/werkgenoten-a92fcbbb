@@ -5,7 +5,7 @@ import { useJob, formatBudget, timeAgo } from "@/lib/queries";
 export const Route = createFileRoute("/opdrachten/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: "Opdracht — Vakwerk" },
+      { title: "Opdracht — Werkgenoten" },
       { name: "description", content: "Bekijk de opdracht en stuur een offerte." },
       { property: "og:type", content: "article" },
       { property: "og:url", content: `/opdrachten/${params.slug}` },

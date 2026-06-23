@@ -11,7 +11,7 @@ export const Route = createFileRoute("/cms/$slug")({
   },
   head: ({ loaderData: _loaderData, params }) => ({
     meta: [
-      { title: `${params.slug} — Vakwerk` },
+      { title: `${params.slug} — Werkgenoten` },
     ],
   }),
   component: CmsPage,

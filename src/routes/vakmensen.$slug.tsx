@@ -5,8 +5,8 @@ import { usePro, initialsOf } from "@/lib/queries";
 export const Route = createFileRoute("/vakmensen/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: "Vakman — Vakwerk" },
-      { name: "description", content: "Bekijk dit professionele profiel op Vakwerk." },
+      { title: "Vakman — Werkgenoten" },
+      { name: "description", content: "Bekijk dit professionele profiel op Werkgenoten." },
       { property: "og:url", content: `/vakmensen/${params.slug}` },
     ],
     links: [{ rel: "canonical", href: `/vakmensen/${params.slug}` }],

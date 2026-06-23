@@ -4,10 +4,10 @@ import { Shield, MessageCircle, Star, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/hoe-werkt-het")({
   head: () => ({
     meta: [
-      { title: "Hoe het werkt — Vakwerk" },
-      { name: "description", content: "In drie stappen van klus naar oplevering. Zo werkt Vakwerk." },
-      { property: "og:title", content: "Hoe het werkt — Vakwerk" },
-      { property: "og:description", content: "Zo werkt Vakwerk: plaatsen, offertes, kiezen." },
+      { title: "Hoe het werkt — Werkgenoten" },
+      { name: "description", content: "In drie stappen van klus naar oplevering. Zo werkt Werkgenoten." },
+      { property: "og:title", content: "Hoe het werkt — Werkgenoten" },
+      { property: "og:description", content: "Zo werkt Werkgenoten: plaatsen, offertes, kiezen." },
       { property: "og:url", content: "/hoe-werkt-het" },
     ],
     links: [{ rel: "canonical", href: "/hoe-werkt-het" }],
@@ -25,7 +25,7 @@ function HowItWorks() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
       <div className="text-center">
-        <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">Zo werkt Vakwerk</h1>
+        <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">Zo werkt Werkgenoten</h1>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Drie stappen om jouw klus aan de juiste vakman te koppelen.</p>
       </div>
 

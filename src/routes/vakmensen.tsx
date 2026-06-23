@@ -6,9 +6,9 @@ import { usePros, useCategories, initialsOf } from "@/lib/queries";
 export const Route = createFileRoute("/vakmensen")({
   head: () => ({
     meta: [
-      { title: "Vakmensen — Vakwerk" },
+      { title: "Vakmensen — Werkgenoten" },
       { name: "description", content: "Vind gecontroleerde vakmensen in jouw regio. Vergelijk reviews, ervaring en reactietijd." },
-      { property: "og:title", content: "Vakmensen — Vakwerk" },
+      { property: "og:title", content: "Vakmensen — Werkgenoten" },
       { property: "og:description", content: "Gecontroleerde vakmensen in heel Nederland." },
       { property: "og:url", content: "/vakmensen" },
     ],

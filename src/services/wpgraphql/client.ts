@@ -37,7 +37,7 @@ export const cmsClient: CmsClient = client
   ? {
       async getPage(slug) {
         // Standard WPGraphQL `page(id, idType:URI)`. `blocksJson` is a custom
-        // field added by the Vakwerk snippet. Network/GraphQL errors bubble up
+        // field added by the Werkgenoten snippet. Network/GraphQL errors bubble up
         // so the route's errorComponent can show "WP onbereikbaar" instead of
         // a silently empty page. Only a missing page returns null (-> 404).
         const data = await client.request<{
