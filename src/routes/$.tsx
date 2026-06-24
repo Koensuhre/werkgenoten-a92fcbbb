@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { cmsPageQuery } from "@/services/wpgraphql";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/$")({
     if (!slug) throw notFound();
     const page = await context.queryClient.ensureQueryData(cmsPageQuery(slug));
     if (!page) throw notFound();
-    return { page };
+    return { page, slug };
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -44,8 +44,11 @@ export const Route = createFileRoute("/$")({
 });
 
 function WpCatchAllPage() {
-  const { page } = Route.useLoaderData();
-  const { data } = useSuspenseQuery(cmsPageQuery(page.slug));
+  const { page, slug } = Route.useLoaderData();
+  // Same key as the loader so we hit the warm cache instead of triggering
+  // a second fetch (which on slow/mobile networks throws and blanks the page).
+  // Loader data is the source of truth; background refetches only upgrade it.
+  const { data } = useQuery({ ...cmsPageQuery(slug), initialData: page });
   const current = data ?? page;
   if (!current.blocks?.length) {
     return (

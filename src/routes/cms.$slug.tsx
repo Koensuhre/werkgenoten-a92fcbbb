@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { cmsPageQuery } from "@/services/wpgraphql";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 
@@ -33,10 +33,11 @@ export const Route = createFileRoute("/cms/$slug")({
 
 function CmsPage() {
   const { page } = Route.useLoaderData();
-  // Subscribe so background refetches update the UI, but render from loader
-  // data as the source of truth — prevents flash-then-empty when a refetch
-  // returns null.
-  const { data } = useSuspenseQuery(cmsPageQuery(page.slug));
+  const { slug } = Route.useParams();
+  // Reuse loader's exact query key + initialData so background refetches
+  // upgrade the UI without ever blanking it, and a transient WP failure
+  // doesn't throw past the boundary.
+  const { data } = useQuery({ ...cmsPageQuery(slug), initialData: page });
   const current = data ?? page;
   if (!current.blocks?.length) {
     return (
