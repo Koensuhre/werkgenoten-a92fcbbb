@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "start": "node dist/server/server.js"
+    "start": "node dist/server/server.js",
+    "type": "module"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
