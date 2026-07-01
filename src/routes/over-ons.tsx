@@ -6,7 +6,7 @@ export const Route = createFileRoute("/over-ons")({
   head: () => ({
     meta: [
       { title: "Over ons — Werkgenoten" },
-      { name: "description", content: "Korte omschrijving van deze pagina." },
+      { name: "description", content: "Over ons pagina van Werkgenoten." },
     ],
   }),
   component: OverOnsPage,
@@ -16,7 +16,10 @@ function OverOnsPage() {
   const [page, setPage] = useState<any>(null)
 
   useEffect(() => {
-    getWpPage("over-ons").then(setPage)
+    getWpPage("/over-ons").then((data) => {
+      console.log("PAGE DATA:", data)
+      setPage(data)
+    })
   }, [])
 
   if (!page) {
