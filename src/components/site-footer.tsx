@@ -8,7 +8,7 @@ export function SiteFooter() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 font-semibold">
               <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-brand-foreground">
-                W
+                Q
               </span>
               Werkgenoten
             </div>
@@ -50,7 +50,7 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <a className="hover:text-foreground" href="https://werkgenoten-a92fcbbb.vercel.app">
+                <a className="hover:text-foreground" href="https://werkgenoten-a92fcbbb.vercel.app/over-ons">
                   Over ons
                 </a>
               </li>
