@@ -13,7 +13,6 @@ import { Route as WordProfessionalRouteImport } from './routes/word-professional
 import { Route as VakmensenRouteImport } from './routes/vakmensen'
 import { Route as PrijzenRouteImport } from './routes/prijzen'
 import { Route as PlaatsOpdrachtRouteImport } from './routes/plaats-opdracht'
-import { Route as OverOnsRouteImport } from './routes/over-ons'
 import { Route as OpdrachtenRouteImport } from './routes/opdrachten'
 import { Route as InloggenRouteImport } from './routes/inloggen'
 import { Route as HoeWerktHetRouteImport } from './routes/hoe-werkt-het'
@@ -66,11 +65,6 @@ const PrijzenRoute = PrijzenRouteImport.update({
 const PlaatsOpdrachtRoute = PlaatsOpdrachtRouteImport.update({
   id: '/plaats-opdracht',
   path: '/plaats-opdracht',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OverOnsRoute = OverOnsRouteImport.update({
-  id: '/over-ons',
-  path: '/over-ons',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpdrachtenRoute = OpdrachtenRouteImport.update({
@@ -262,7 +256,6 @@ export interface FileRoutesByFullPath {
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
   '/opdrachten': typeof OpdrachtenRouteWithChildren
-  '/over-ons': typeof OverOnsRoute
   '/plaats-opdracht': typeof PlaatsOpdrachtRoute
   '/prijzen': typeof PrijzenRoute
   '/vakmensen': typeof VakmensenRouteWithChildren
@@ -299,7 +292,6 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
-  '/over-ons': typeof OverOnsRoute
   '/plaats-opdracht': typeof PlaatsOpdrachtRoute
   '/prijzen': typeof PrijzenRoute
   '/word-professional': typeof WordProfessionalRoute
@@ -337,7 +329,6 @@ export interface FileRoutesById {
   '/hoe-werkt-het': typeof HoeWerktHetRoute
   '/inloggen': typeof InloggenRoute
   '/opdrachten': typeof OpdrachtenRouteWithChildren
-  '/over-ons': typeof OverOnsRoute
   '/plaats-opdracht': typeof PlaatsOpdrachtRoute
   '/prijzen': typeof PrijzenRoute
   '/vakmensen': typeof VakmensenRouteWithChildren
@@ -378,7 +369,6 @@ export interface FileRouteTypes {
     | '/hoe-werkt-het'
     | '/inloggen'
     | '/opdrachten'
-    | '/over-ons'
     | '/plaats-opdracht'
     | '/prijzen'
     | '/vakmensen'
@@ -415,7 +405,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/hoe-werkt-het'
     | '/inloggen'
-    | '/over-ons'
     | '/plaats-opdracht'
     | '/prijzen'
     | '/word-professional'
@@ -452,7 +441,6 @@ export interface FileRouteTypes {
     | '/hoe-werkt-het'
     | '/inloggen'
     | '/opdrachten'
-    | '/over-ons'
     | '/plaats-opdracht'
     | '/prijzen'
     | '/vakmensen'
@@ -493,7 +481,6 @@ export interface RootRouteChildren {
   HoeWerktHetRoute: typeof HoeWerktHetRoute
   InloggenRoute: typeof InloggenRoute
   OpdrachtenRoute: typeof OpdrachtenRouteWithChildren
-  OverOnsRoute: typeof OverOnsRoute
   PlaatsOpdrachtRoute: typeof PlaatsOpdrachtRoute
   PrijzenRoute: typeof PrijzenRoute
   VakmensenRoute: typeof VakmensenRouteWithChildren
@@ -531,13 +518,6 @@ declare module '@tanstack/react-router' {
       path: '/plaats-opdracht'
       fullPath: '/plaats-opdracht'
       preLoaderRoute: typeof PlaatsOpdrachtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/over-ons': {
-      id: '/over-ons'
-      path: '/over-ons'
-      fullPath: '/over-ons'
-      preLoaderRoute: typeof OverOnsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/opdrachten': {
@@ -902,7 +882,6 @@ const rootRouteChildren: RootRouteChildren = {
   HoeWerktHetRoute: HoeWerktHetRoute,
   InloggenRoute: InloggenRoute,
   OpdrachtenRoute: OpdrachtenRouteWithChildren,
-  OverOnsRoute: OverOnsRoute,
   PlaatsOpdrachtRoute: PlaatsOpdrachtRoute,
   PrijzenRoute: PrijzenRoute,
   VakmensenRoute: VakmensenRouteWithChildren,
