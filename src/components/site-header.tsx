@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useSession } from "@/hooks/use-session";
 import { useIsAdmin } from "@/hooks/use-current-profile";
 import { supabase } from "@/integrations/supabase/client";
-import { cmsMenuQuery } from "@/services/wpgraphql";
+import { cmsMenuQuery, cmsPagesListQuery } from "@/services/wpgraphql";
 
 const fallbackNav = [
   { to: "/opdrachten", label: "Opdrachten" },
@@ -15,15 +15,38 @@ const fallbackNav = [
   { to: "/prijzen", label: "Prijzen" },
 ];
 
+// Pages we never want to auto-inject into the header, even if they exist in WP.
+const HIDDEN_NAV_SLUGS = new Set([
+  "home", "homepage", "voorbeeld-pagina", "sample-page",
+  "privacy", "voorwaarden", "cookies", "cookie-policy",
+]);
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { user, loading } = useSession();
   const isAdmin = useIsAdmin();
   const navigate = useNavigate();
   const { data: wpMenu } = useQuery(cmsMenuQuery("PRIMARY"));
-  const nav = wpMenu?.items?.length
+  const { data: wpPages } = useQuery(cmsPagesListQuery());
+  // Base = WP PRIMARY menu when the admin has curated one, otherwise the
+  // hardcoded fallback so app-routes always work. Order is preserved.
+  const baseNav = wpMenu?.items?.length
     ? wpMenu.items.map((m) => ({ to: m.href, label: m.label }))
     : fallbackNav;
+  // Auto-append any published WP page not already covered by baseNav so
+  // new pages appear in the menu without a code change. Existing order
+  // and items are never reordered or removed.
+  const seen = new Set(baseNav.map((n) => n.to.replace(/\/+$/, "")));
+  const extras = (wpPages ?? [])
+    .filter((p) => !HIDDEN_NAV_SLUGS.has(p.slug))
+    .map((p) => ({ to: `/${p.slug}`, label: p.title }))
+    .filter((n) => {
+      const key = n.to.replace(/\/+$/, "");
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  const nav = [...baseNav, ...extras];
 
   async function handleSignOut() {
     await supabase.auth.signOut();

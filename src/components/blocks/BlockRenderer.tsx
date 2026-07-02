@@ -1,5 +1,35 @@
 import type { Block, CtaLink } from "@/types/cms";
 import DOMPurify from "dompurify";
+import { Component, type ReactNode } from "react";
+
+// Per-block error boundary: one broken section must never blank the
+// whole page. Logs to the console with the block __typename so the
+// developer sees exactly which block failed.
+class BlockErrorBoundary extends Component<
+  { name: string; children: ReactNode },
+  { hasError: boolean; error?: Error }
+> {
+  state = { hasError: false, error: undefined as Error | undefined };
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error: Error) {
+    console.error(`[BlockRenderer] block "${this.props.name}" failed to render`, error);
+  }
+  render() {
+    if (!this.state.hasError) return this.props.children;
+    if (import.meta.env.DEV) {
+      return (
+        <section className="mx-auto w-full max-w-7xl px-4 py-6">
+          <div className="rounded-md border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">
+            Blok <code>{this.props.name}</code> kon niet worden weergegeven.
+          </div>
+        </section>
+      );
+    }
+    return null;
+  }
+}
 
 function Ctas({ ctas }: { ctas?: CtaLink[] }) {
   if (!ctas?.length) return null;
@@ -252,27 +282,34 @@ export function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return (
     <>
       {blocks.map((b) => {
+        let node: ReactNode = null;
         switch (b.__typename) {
-          case "HeroBlock": return <Hero key={b.id} block={b} />;
-          case "RichTextBlock": return <RichText key={b.id} block={b} />;
-          case "FeaturesBlock": return <Features key={b.id} block={b} />;
-          case "CtaBlock": return <Cta key={b.id} block={b} />;
-          case "TestimonialsBlock": return <Testimonials key={b.id} block={b} />;
-          case "FaqBlock": return <Faq key={b.id} block={b} />;
-          case "StatsBlock": return <Stats key={b.id} block={b} />;
-          case "PricingBlock": return <Pricing key={b.id} block={b} />;
-          case "LogosBlock": return <Logos key={b.id} block={b} />;
-          case "GalleryBlock": return <Gallery key={b.id} block={b} />;
-          case "ImageBlock": return <Image key={b.id} block={b} />;
-          case "VideoBlock": return <Video key={b.id} block={b} />;
-          case "FormBlock": return <FormBlk key={b.id} block={b} />;
-          case "CustomHtmlBlock": return <CustomHtml key={b.id} block={b} />;
-          case "TeamBlock": return <Team key={b.id} block={b} />;
+          case "HeroBlock": node = <Hero block={b} />; break;
+          case "RichTextBlock": node = <RichText block={b} />; break;
+          case "FeaturesBlock": node = <Features block={b} />; break;
+          case "CtaBlock": node = <Cta block={b} />; break;
+          case "TestimonialsBlock": node = <Testimonials block={b} />; break;
+          case "FaqBlock": node = <Faq block={b} />; break;
+          case "StatsBlock": node = <Stats block={b} />; break;
+          case "PricingBlock": node = <Pricing block={b} />; break;
+          case "LogosBlock": node = <Logos block={b} />; break;
+          case "GalleryBlock": node = <Gallery block={b} />; break;
+          case "ImageBlock": node = <Image block={b} />; break;
+          case "VideoBlock": node = <Video block={b} />; break;
+          case "FormBlock": node = <FormBlk block={b} />; break;
+          case "CustomHtmlBlock": node = <CustomHtml block={b} />; break;
+          case "TeamBlock": node = <Team block={b} />; break;
           default: {
-            if (import.meta.env.DEV) console.warn("[BlockRenderer] unknown block", b);
+            const unknown = b as { __typename?: string; id?: string };
+            console.warn(`[BlockRenderer] unknown block type "${unknown.__typename}"`, b);
             return null;
           }
         }
+        return (
+          <BlockErrorBoundary key={b.id} name={b.__typename}>
+            {node}
+          </BlockErrorBoundary>
+        );
       })}
     </>
   );

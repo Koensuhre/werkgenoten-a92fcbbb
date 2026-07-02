@@ -41,15 +41,22 @@ export const cmsClient: CmsClient = client
         // so the route's errorComponent can show "WP onbereikbaar" instead of
         // a silently empty page. Only a missing page returns null (-> 404).
         const data = await client.request<{
-          page: { slug: string; title: string; blocksJson?: string | null } | null;
+          page: { slug: string; title: string; content?: string | null; blocksJson?: string | null } | null;
         }>(
-          /* GraphQL */ `query($slug:ID!){ page(id:$slug, idType:URI){ slug title blocksJson } }`,
+          /* GraphQL */ `query($slug:ID!){ page(id:$slug, idType:URI){ slug title content blocksJson } }`,
           { slug },
         );
         if (!data.page) return null;
         let blocks: Block[] = [];
         if (data.page.blocksJson) {
           try { blocks = JSON.parse(data.page.blocksJson); } catch { blocks = []; }
+        }
+        // Fallback: no structured blocks yet (page built with plain
+        // Gutenberg/classic editor) — render the rendered HTML content as
+        // a RichText block so the page shows real content instead of a
+        // "geen content" placeholder.
+        if (blocks.length === 0 && data.page.content && data.page.content.trim().length > 0) {
+          blocks = [{ __typename: "RichTextBlock", id: "wp-content", html: data.page.content }];
         }
         return { slug: data.page.slug, title: data.page.title, seo: {}, blocks };
       },
